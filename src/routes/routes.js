@@ -1,9 +1,9 @@
 // public routes
 import About from "../pages/About";
-import ForgotPassword from "../pages/account/ForgotPassword";
-import Login from "../pages/account/Login";
-import Register from "../pages/account/Register";
-import ResetPassword from "../pages/account/ResetPassword";
+import ForgotPassword from "../pages/auth/ForgotPassword";
+import Login from "../pages/auth/Login";
+import Register from "../pages/auth/Register";
+import ResetPassword from "../pages/auth/ResetPassword";
 import BlogDetail from "../pages/blogs/BlogDetail";
 import Blogs from "../pages/blogs/Blogs";
 import Contact from "../pages/Contact";
@@ -12,6 +12,10 @@ import Pricing from "../pages/Pricing";
 import ProjectCase from "../pages/projects/ProjectCase";
 import Projects from "../pages/projects/Projects";
 
+// authenticated routes
+import ChangePassword from "../pages/dashboard/ChangePassword";
+import MyAccount from "../pages/dashboard/MyAccount";
+import MyPurchases from "../pages/dashboard/MyPurchases";
 
 const routes = [
     {
@@ -73,6 +77,24 @@ const routes = [
         path: "/reset-password",
         element: ResetPassword,
         role: ['*']
+    },
+    {
+        path: "/account",
+        role: ['user'],
+        children: [
+            {
+                path: '/',
+                element: MyAccount
+            },
+            {
+                path: 'change-password',
+                element: ChangePassword
+            },
+            {
+                path: 'history',
+                element: MyPurchases
+            }
+        ]
     }
 ]
 

@@ -4,7 +4,7 @@ const NavDrower = ({ isDrowerOpen, setIsDrowerOpen }) => {
     return (
         <>
             {
-                isDrowerOpen && <div onClick={setIsDrowerOpen} className="lg:hidden block h-full w-full z-[100] absolute top-0 left-0 bg-gray-100 transition duration-150"></div>
+                isDrowerOpen && <div onClick={setIsDrowerOpen} className="lg:hidden block h-full w-full z-[100] absolute top-0 left-0 bg-tintBlue opacity-75 transition duration-150"></div>
             }
 
             <div className="lg:hidden block z-[150] absolute top-0 h-screen w-[60%] bg-white transition duration-150" style={{ transform: `translateX(${isDrowerOpen ? "0" : "-100%"})` }}>
