@@ -8,6 +8,7 @@ import BlogDetail from "../pages/blogs/BlogDetail";
 import Blogs from "../pages/blogs/Blogs";
 import Contact from "../pages/Contact";
 import Home from "../pages/Home";
+import NotFound from "../pages/NotFound";
 import Pricing from "../pages/Pricing";
 import ProjectCase from "../pages/projects/ProjectCase";
 import Projects from "../pages/projects/Projects";
@@ -100,6 +101,11 @@ const routes = [
                 element: PurchaseDetail
             }
         ]
+    },
+    {
+        path: '*',
+        element: NotFound,
+        role: ['*']
     }
 ]
 
