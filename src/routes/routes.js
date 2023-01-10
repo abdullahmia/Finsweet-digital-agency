@@ -16,6 +16,7 @@ import Projects from "../pages/projects/Projects";
 import ChangePassword from "../pages/dashboard/ChangePassword";
 import MyAccount from "../pages/dashboard/MyAccount";
 import MyPurchases from "../pages/dashboard/MyPurchases";
+import PurchaseDetail from "../pages/dashboard/PurchaseDetail";
 
 const routes = [
     {
@@ -93,6 +94,10 @@ const routes = [
             {
                 path: 'history',
                 element: MyPurchases
+            },
+            {
+                path: 'history/:orderId',
+                element: PurchaseDetail
             }
         ]
     }

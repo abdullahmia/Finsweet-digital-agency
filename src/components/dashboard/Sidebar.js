@@ -56,19 +56,9 @@ const Sidebar = () => {
                   <NavLink
                       to="/account/history"
                       className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                      end={true}
                   >
                       <BiCart size={20} />
                       <span>My Purchases</span>
-                  </NavLink>
-
-                  <NavLink
-                      to="/account/change-password"
-                      className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                      end={true}
-                  >
-                      <BiLockAlt size={20} />
-                      <span>Change Password</span>
                   </NavLink>
 
               </div>
