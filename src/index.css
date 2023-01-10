@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+p {
+	word-break: break-all;
+}
+
+.transparent-btn {
+	@apply bg-transparent text-gray-300 capitalize font-poppins border border-gray-600 px-6 py-3 rounded-full hover:border-gray-300 transition-all;
+}
+
+.yellow-btn {
+	@apply bg-yellow text-gray-800 font-semibold font-poppins border border-yellow px-6 py-3 rounded-full hover:bg-transparent hover:text-yellow transition-all;
+}
+
+.black-btn {
+	@apply bg-darkBlue text-gray-100 font-semibold font-poppins border border-darkBlue px-10 py-3 rounded-full hover:bg-transparent hover:text-darkBlue transition-all;
+}
+
+.btn {
+	@apply flex items-center gap-3 font-poppins;
+}
+
+/* Swiper */
+
+.swiper {
+	width: 100%;
+	height: 100%;
+}
+
+.swiper-slide {
+	text-align: center;
+	font-size: 18px;
+	background: #fff;
+
+	/* Center slide text vertically */
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: -webkit-flex;
+	/* display: flex; */
+	-webkit-box-pack: center;
+	-ms-flex-pack: center;
+	-webkit-justify-content: center;
+	/* justify-content: center; */
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	/* align-items: center; */
+}
