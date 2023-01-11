@@ -19,6 +19,11 @@ import MyAccount from "../pages/dashboard/MyAccount";
 import MyPurchases from "../pages/dashboard/MyPurchases";
 import PurchaseDetail from "../pages/dashboard/PurchaseDetail";
 
+
+// Admin routes
+import AdminBlogs from "../pages/dashboard/admin/Blogs";
+import Dashboard from "../pages/dashboard/admin/Dashboard";
+
 const routes = [
     {
         path: "/",
@@ -99,6 +104,20 @@ const routes = [
             {
                 path: 'history/:orderId',
                 element: PurchaseDetail
+            }
+        ]
+    },
+    {
+        path: "/admin",
+        role: ["admin"],
+        children: [
+            {
+                path: '/',
+                element: Dashboard
+            },
+            {
+                path: 'blog',
+                element: AdminBlogs,
             }
         ]
     },

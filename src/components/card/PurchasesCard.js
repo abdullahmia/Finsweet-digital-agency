@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const PurchasesCard = () => {
     return (
-        <div className="font-poppins space-y-5 border p-5 rounded">
+        <div className="font-poppins space-y-5 p-5 shadow rounded">
             <div className="flex justify-between gap-8">
                 <h3 className="w-1/2 text-[22px] text-darkBlue">Full Stack Web Development</h3>
                 <div className="w-1/2 flex justify-end items-center">

@@ -4,7 +4,7 @@ import DashboardLayout from "../../components/layouts/DashboardLayout";
 const MyAccount = () => {
     return (
         <DashboardLayout title="My Account">
-            <div className="w-full font-poppins px-6">
+            <div className="w-full font-poppins px-6 pt-6 pb-14 shadow rounded">
                 <h3 className="text-lg font-medium capitalize mb-4">Manage Address</h3>
                 
                 <form className="space-y-7">

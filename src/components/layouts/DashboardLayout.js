@@ -13,7 +13,7 @@ const DashboardLayout = ({ children, title }) => {
           {/* <!-- sidebar end --> */}
 
           {/* <!-- account content --> */}
-          <div className="col-span-9 mt-6 lg:mt-0 shadow pt-6 pb-12 rounded">
+          <div className="col-span-9 lg:mt-0 pb-12">
             {children}
           </div>
           {/* <!-- account content end --> */}
