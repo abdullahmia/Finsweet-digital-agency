@@ -1,4 +1,4 @@
-import { BiCart, BiLockAlt, BiMessageSquareEdit, BiUserPin } from 'react-icons/bi';
+import { BiCart, BiLockAlt, BiMessageSquareEdit, BiNotepad, BiUserPin } from 'react-icons/bi';
 import { NavLink } from "react-router-dom";
 import avatar from '../../assets/images/team/member-1.png';
 
@@ -10,7 +10,7 @@ const Sidebar = () => {
     return (
         <div className="col-span-3 font-poppins">
             {/* <!-- account profile --> */}
-            <div className="px-4 py-3 shadow flex items-center gap-4">
+            <div className="px-4 py-3 shadow flex items-center gap-4 bg-white">
                 <div className="flex-shrink-0">
                     <img
                         src={avatar}
@@ -66,11 +66,23 @@ const Sidebar = () => {
 
                 <div className="space-y-1 pl-8 pt-4">
                     <NavLink
-                        to="/admin/blog"
+                        to="/admin"
+                        end={true}
+                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                    >
+                        <BiNotepad size={20} />
+                        <span>Dashbaord</span>
+                    </NavLink>
+                </div>
+
+
+                <div className="space-y-1 pl-8 pt-4">
+                    <NavLink
+                        to="/admin/article"
                         className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
                     >
                         <BiMessageSquareEdit size={20} />
-                        <span>Blogs</span>
+                        <span>Articles</span>
                     </NavLink>
                     <NavLink
                         to="/account/history"

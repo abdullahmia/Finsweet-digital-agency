@@ -21,8 +21,10 @@ import PurchaseDetail from "../pages/dashboard/PurchaseDetail";
 
 
 // Admin routes
-import AdminBlogs from "../pages/dashboard/admin/Blogs";
+import AddArticle from "../pages/dashboard/admin/AddArticle";
+import AdminArticles from "../pages/dashboard/admin/Articles";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
+import EditArticle from "../pages/dashboard/admin/EditArticle";
 
 const routes = [
     {
@@ -116,8 +118,16 @@ const routes = [
                 element: Dashboard
             },
             {
-                path: 'blog',
-                element: AdminBlogs,
+                path: 'article',
+                element: AdminArticles,
+            },
+            {
+                path: 'article/new',
+                element: AddArticle
+            },
+            {
+                path: 'article/edit/:articleId',
+                element: EditArticle
             }
         ]
     },

@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom';
 import DashboardLayout from '../../../components/layouts/DashboardLayout';
 
-const Blogs = () => {
+const Articles = () => {
     return (
-        <DashboardLayout title="BLogs">
+        <DashboardLayout title="Articles">
             {/* Page Header */}
-            <div className='shadow-lg px-6 py-4 font-poppins flex items-center justify-between flex-wrap'>
+            <div className='shadow-lg px-6 py-4 font-poppins flex items-center justify-between flex-wrap bg-white'>
                 <div>
                     <h2 className='text-xl '>Articles</h2>
                 </div>
                 <div>
-                    <Link to="/admin/blog/new" className='bg-indigo-500 border border-indigo-500 text-white px-6 py-2 rounded hover:bg-transparent hover:text-indigo-500 transition text-sm'>Add Article</Link>
+                    <Link to="/admin/article/new" className='bg-indigo-500 border border-indigo-500 text-white px-6 py-2 rounded hover:bg-transparent hover:text-indigo-500 transition text-sm'>Add Article</Link>
                 </div>
             </div>
 
@@ -72,9 +72,9 @@ const Blogs = () => {
                             <td className="p-4 w-64 group">
                                 How Filecoin is Up in a Week Could Take Care
                                 <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/blog/edit/blogid">Edit</Link>
+                                    <Link to="/admin/article/edit/blogid" className='hover:text-indigo-600 transition'>Edit</Link>
                                     <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid">View</Link>
+                                    <Link to="/blog/blogid" className='hover:text-green-600 transition'>View</Link>
                                 </div>
                             </td>
                             <td className="py-4 px-6 text-sm">
@@ -91,121 +91,7 @@ const Blogs = () => {
                                 Published
                             </td>
                         </tr>
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/blog/edit/blogid">Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid">View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
 
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/blog/edit/blogid">Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid">View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/blog/edit/blogid">Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid">View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/blog/edit/blogid">Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid">View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/blog/edit/blogid">Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid">View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
                        
                     </tbody>
                 </table>
@@ -249,4 +135,4 @@ const Blogs = () => {
     )
 }
 
-export default Blogs
+export default Articles
