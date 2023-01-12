@@ -21,10 +21,11 @@ import PurchaseDetail from "../pages/dashboard/PurchaseDetail";
 
 
 // Admin routes
-import AddArticle from "../pages/dashboard/admin/AddArticle";
-import AdminArticles from "../pages/dashboard/admin/Articles";
+import AddArticle from "../pages/dashboard/admin/articles/AddArticle";
+import ArticleCategories from "../pages/dashboard/admin/articles/ArticleCategories";
+import AdminArticles from "../pages/dashboard/admin/articles/Articles";
+import EditArticle from "../pages/dashboard/admin/articles/EditArticle";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
-import EditArticle from "../pages/dashboard/admin/EditArticle";
 
 const routes = [
     {
@@ -128,6 +129,10 @@ const routes = [
             {
                 path: 'article/edit/:articleId',
                 element: EditArticle
+            },
+            {
+                path: 'article/category',
+                element: ArticleCategories
             }
         ]
     },

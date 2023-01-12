@@ -79,13 +79,14 @@ const Sidebar = () => {
                 <div className="space-y-1 pl-8 pt-4">
                     <NavLink
                         to="/admin/article"
+                        end={true}
                         className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
                     >
                         <BiMessageSquareEdit size={20} />
                         <span>Articles</span>
                     </NavLink>
                     <NavLink
-                        to="/account/history"
+                        to="/admin/article/category"
                         className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
                     >
                         <span className='ml-7'>Categories</span>

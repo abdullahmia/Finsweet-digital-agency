@@ -1,5 +1,5 @@
-import ArticleForm from "../../../components/forms/ArticleForm";
-import DashboardLayout from "../../../components/layouts/DashboardLayout";
+import ArticleForm from "../../../../components/forms/ArticleForm";
+import DashboardLayout from "../../../../components/layouts/DashboardLayout";
 
 const AddArticle = () => {
   return (

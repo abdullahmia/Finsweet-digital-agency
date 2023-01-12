@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import DashboardLayout from '../../../components/layouts/DashboardLayout';
+import DashboardLayout from '../../../../components/layouts/DashboardLayout';
 
 const Articles = () => {
     return (
