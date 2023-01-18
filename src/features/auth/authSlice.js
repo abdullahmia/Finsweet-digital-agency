@@ -18,6 +18,8 @@ export const authSlice = createSlice({
         userLoggedOut: (state, action) => {
             state.user = null;
             state.token = null;
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
         }
     }
 })

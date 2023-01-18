@@ -1,12 +1,21 @@
 import { BiCart, BiCategory, BiLockAlt, BiMessageSquareEdit, BiNotepad, BiUser, BiUserPin } from 'react-icons/bi';
-import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink, useNavigate } from "react-router-dom";
 import avatar from '../../assets/images/team/member-1.png';
+import { userLoggedOut } from '../../features/auth/authSlice';
 
 
 const Sidebar = () => {
-    const user = { firstName: "Abir", lastName: "Islam" }
+    const {user} = useSelector(state => state.auth);
 
-    const logout = () => { }
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    
+    // handle logout
+    const logout = () => {
+        dispatch(userLoggedOut());
+        navigate('/login');
+    }
     return (
         <div className="col-span-3 font-poppins">
             {/* <!-- account profile --> */}

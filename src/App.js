@@ -1,12 +1,13 @@
 import { Toaster } from 'react-hot-toast';
+import useAuthCheck from './hooks/useAuthCheck';
 import Main from "./pages/Main";
 const App = () => {
-  return (
-    <>
-      <Main />
-      <Toaster position="top-right" />
-    </>
-  )
+  const authCheck = useAuthCheck();
+
+  return authCheck ? <>
+    <Main />
+    <Toaster position="top-right" />
+  </> : <>Loading...</>
 }
 
 export default App;

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { BiLockAlt } from 'react-icons/bi';
 import { BsFacebook } from 'react-icons/bs';
 import { FcGoogle } from "react-icons/fc";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from "../../components/layouts/Layout";
 import Circle from '../../components/loaders/Circle';
 import { useLoginUserMutation } from '../../features/auth/authApi';
@@ -12,6 +12,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const {register, handleSubmit, reset} = useForm();
 
+    const navigate = useNavigate();
 
     // handle user
     const [loginUser, {isLoading, isSuccess, data, isError, error: responseError}] = useLoginUserMutation();
@@ -25,9 +26,10 @@ const Login = () => {
             setError(responseError.data?.message);
         }
         if (isSuccess) {
-            // console.log(data);
+            reset();
+            navigate('/account');
         }
-    }, [isError, responseError, isSuccess, data])
+    }, [isError, responseError, isSuccess, data, navigate, reset])
 
     return (
         <Layout title="Login | Sweet Agency">

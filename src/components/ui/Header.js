@@ -1,8 +1,10 @@
 import { CiGrid41 } from "react-icons/ci";
 import { Link, NavLink } from "react-router-dom";
+import useIsAuthenticated from "../../hooks/useIsAuthenticated";
 
 
 const Header = ({ toggoleDrower }) => {
+    const isAuthenticated = useIsAuthenticated();
     return (
         <header className="bg-tintBlue py-6 lg:px-0 px-4">
             <nav className="container text-gray-100 flex items-center justify-between">
@@ -34,12 +36,21 @@ const Header = ({ toggoleDrower }) => {
                                 <li>
                                     <NavLink to="/blog" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Blogs</NavLink>
                                 </li>
-                                <li>
-                                    <NavLink to="/register" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Register</NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/login" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Login</NavLink>
-                                </li>
+
+                                {
+                                    isAuthenticated ? <li>
+                                        <NavLink to="/account" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>My Account</NavLink>
+                                    </li> : <>
+                                            <li>
+                                                <NavLink to="/register" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Register</NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink to="/login" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Login</NavLink>
+                                            </li>
+                                    
+                                    </>
+                                }
+                                
                                 
                             </ul>
                         </div>

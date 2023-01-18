@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import PrivateRoute from '../routes/PrivateRoute';
 import routes from "../routes/routes";
 
 const Main = () => {
@@ -36,18 +37,18 @@ const Main = () => {
             {route.children ? (
               route.children.map((subRoute, i) =>
                 subRoute.path === "/" ? (
-                  <Route key={i} index={true} element={<subRoute.element />} />
+                  <Route key={i} index={true} element={<PrivateRoute><subRoute.element /></PrivateRoute>} />
                 ) : (
                   <Route
                     key={i}
                     index={false}
                     path={subRoute.path}
-                    element={<subRoute.element />}
+                    element={<PrivateRoute><subRoute.element /></PrivateRoute>}
                   />
                 )
               )
             ) : (
-              <Route path={route.path} element={<route.element />} />
+              <Route path={route.path} element={<PrivateRoute><route.element /></PrivateRoute>} />
             )}
           </Route>
         ))}
