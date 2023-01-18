@@ -17,7 +17,7 @@ p {
 }
 
 .black-btn {
-	@apply bg-darkBlue text-gray-100 font-semibold font-poppins border border-darkBlue px-10 py-3 rounded-full hover:bg-transparent hover:text-darkBlue transition-all;
+	@apply bg-darkBlue text-gray-100 font-semibold font-poppins border border-darkBlue px-10 py-3 rounded-full hover:bg-transparent hover:text-darkBlue transition-all flex justify-center items-center;
 }
 .black-sm-btn {
 	@apply bg-darkBlue border border-darkBlue text-white px-6 py-2 rounded hover:bg-transparent hover:text-darkBlue transition text-sm;

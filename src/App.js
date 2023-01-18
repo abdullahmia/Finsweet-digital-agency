@@ -1,8 +1,11 @@
+import { Toaster } from 'react-hot-toast';
 import Main from "./pages/Main";
-
 const App = () => {
   return (
-    <Main />
+    <>
+      <Main />
+      <Toaster position="top-right" />
+    </>
   )
 }
 
