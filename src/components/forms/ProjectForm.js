@@ -54,10 +54,8 @@ const ProjectForm = ({ isEdit }) => {
     //delete image from form
     const removeImage = (image) => {
         let index = images.indexOf(image);
-        // console.log(index);
         if (index > -1) {
             let restImages = images.filter(image => images.indexOf(image) !== index);
-            console.log(restImages);
             setImages(restImages);
         }
     }
@@ -67,10 +65,6 @@ const ProjectForm = ({ isEdit }) => {
         setFile(file);
     };
 
-
-
-
-    console.log("This is images: ", images);
 
     return (
         <div className='shadow px-6 pb-10 pt-4 bg-white font-poppins'>

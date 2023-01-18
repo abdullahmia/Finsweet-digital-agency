@@ -27,7 +27,6 @@ const ResetPassword = () => {
     const [resetPassword, {isLoading, isSuccess, data, isError, error: responseError}] = useResetPasswordMutation();
     const handleResetPassword = async (data) => {
         const { password, confirmPassword } = data;
-        console.log(data);
 
         if (password !== confirmPassword) {
             setError('Password does not match');
