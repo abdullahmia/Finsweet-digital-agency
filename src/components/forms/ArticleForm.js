@@ -147,6 +147,11 @@ const ArticleForm = ({isEdit}) => {
                 </div>
 
                 <div>
+                    <label className="text-gray-600 mb-2 block">Short Descripotions</label>
+                    <textarea className='input' rows="3"></textarea>
+                </div>
+
+                <div>
                     <label className="text-gray-600 mb-2 block">Descripotions</label>
                     <Editor value={value} handleChange={setValue} />
                 </div>  

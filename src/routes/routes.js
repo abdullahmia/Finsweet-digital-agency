@@ -26,6 +26,9 @@ import ArticleCategories from "../pages/dashboard/admin/articles/ArticleCategori
 import AdminArticles from "../pages/dashboard/admin/articles/Articles";
 import EditArticle from "../pages/dashboard/admin/articles/EditArticle";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
+import AddProject from "../pages/dashboard/admin/projects/AddProject";
+import ProjectCategories from "../pages/dashboard/admin/projects/ProjectCategories";
+import ProjectsPage from "../pages/dashboard/admin/projects/Projects";
 
 const routes = [
     {
@@ -84,7 +87,7 @@ const routes = [
         role: ['*']
     },
     {
-        path: "/reset-password",
+        path: "/reset-password/:userId/:token",
         element: ResetPassword,
         role: ['*']
     },
@@ -133,6 +136,18 @@ const routes = [
             {
                 path: 'article/category',
                 element: ArticleCategories
+            },
+            {
+                path: 'projects',
+                element: ProjectsPage
+            },
+            {
+                path: 'projects/new',
+                element: AddProject
+            },
+            {
+                path: 'projects/category',
+                element: ProjectCategories
             }
         ]
     },

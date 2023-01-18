@@ -1,4 +1,4 @@
-import { BiCart, BiLockAlt, BiMessageSquareEdit, BiNotepad, BiUserPin } from 'react-icons/bi';
+import { BiCart, BiCategory, BiLockAlt, BiMessageSquareEdit, BiNotepad, BiUser, BiUserPin } from 'react-icons/bi';
 import { NavLink } from "react-router-dom";
 import avatar from '../../assets/images/team/member-1.png';
 
@@ -91,73 +91,40 @@ const Sidebar = () => {
                     >
                         <span className='ml-7'>Categories</span>
                     </NavLink>
-
                 </div>
 
-
-                {/* <!-- single NavLink end -->
-                <!-- single NavLink --> */}
                 <div className="space-y-1 pl-8 pt-4">
                     <NavLink
-                        to="/account/order-history"
-                        className={(navInfo) =>
-                            navInfo.isActive
-                                ? "relative text-base font-medium capitalize hover:text-primary transition block text-primary"
-                                : "relative text-base font-medium hover:text-primary transition capitalize block"
-                        }
+                        to="/admin/projects"
+                        end={true}
+                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
                     >
-                        My order history
-                        <span className="absolute -left-8 top-0 text-base">
-                            <i className="fas fa-gift"></i>
-                        </span>
+                        <BiCategory size={20} />
+                        <span>Projects</span>
                     </NavLink>
-
                     <NavLink
-                        to="/account/reviews"
-                        className={(navInfo) =>
-                            navInfo.isActive
-                                ? "relative text-base font-medium capitalize hover:text-primary transition block text-primary"
-                                : "relative text-base font-medium hover:text-primary transition capitalize block"
-                        }
+                        to="/admin/projects/category"
+                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
                     >
-                        my reviews
+                        <span className='ml-7'>Categories</span>
                     </NavLink>
                 </div>
 
-
-
-
-
-                {/* <!-- single NavLink end -->
-                <!-- single NavLink --> */}
                 <div className="space-y-1 pl-8 pt-4">
-                    <div className="relative medium capitalize text-gray-800 font-medium hover:text-primary transition block">
-                        Payment methods
-                        <span className="absolute -left-8 top-0 text-base">
-                            <i className="far fa-credit-card"></i>
-                        </span>
-                    </div>
-                    <div className="hover:text-primary transition block capitalize">
-                        Voucher
-                    </div>
-                </div>
-                {/* <!-- single NavLink end -->
-                <!-- single NavLink --> */}
-                <div className="pl-8 pt-4">
                     <NavLink
-                        to="/account/wishlist"
-                        className={(navInfo) =>
-                            navInfo.isActive
-                                ? "relative text-base font-medium capitalize hover:text-primary transition block text-primary"
-                                : "relative text-base font-medium hover:text-primary transition capitalize block"
-                        }
+                        to="/admin/users"
+                        end={true}
+                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
                     >
-                        my wishlist
-                        <span className="absolute -left-8 top-0 text-base">
-                            <i className="far fa-heart"></i>
-                        </span>
+                        <BiUser size={20} />
+                        <span>Users</span>
                     </NavLink>
                 </div>
+
+                
+
+
+
                 {/* <!-- single NavLink end --> */}
                 {/* <!-- single NavLink --> */}
                 <div className="pl-8 pt-4">
