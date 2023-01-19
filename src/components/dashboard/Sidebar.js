@@ -16,6 +16,7 @@ const Sidebar = () => {
         dispatch(userLoggedOut());
         navigate('/login');
     }
+    
     return (
         <div className="col-span-3 font-poppins">
             {/* <!-- account profile --> */}
@@ -72,63 +73,70 @@ const Sidebar = () => {
 
                 </div>
 
+                {
+                    user?.role === 'admin' && <>
+                    
+                        <div className="space-y-1 pl-8 pt-4">
+                            <NavLink
+                                to="/admin"
+                                end={true}
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <BiNotepad size={20} />
+                                <span>Dashbaord</span>
+                            </NavLink>
+                        </div>
 
-                <div className="space-y-1 pl-8 pt-4">
-                    <NavLink
-                        to="/admin"
-                        end={true}
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                    >
-                        <BiNotepad size={20} />
-                        <span>Dashbaord</span>
-                    </NavLink>
-                </div>
+
+                        <div className="space-y-1 pl-8 pt-4">
+                            <NavLink
+                                to="/admin/article"
+                                end={true}
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <BiMessageSquareEdit size={20} />
+                                <span>Articles</span>
+                            </NavLink>
+                            <NavLink
+                                to="/admin/article/category"
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <span className='ml-7'>Categories</span>
+                            </NavLink>
+                        </div>
+
+                        <div className="space-y-1 pl-8 pt-4">
+                            <NavLink
+                                to="/admin/projects"
+                                end={true}
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <BiCategory size={20} />
+                                <span>Projects</span>
+                            </NavLink>
+                            <NavLink
+                                to="/admin/projects/category"
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <span className='ml-7'>Categories</span>
+                            </NavLink>
+                        </div>
+
+                        <div className="space-y-1 pl-8 pt-4">
+                            <NavLink
+                                to="/admin/users"
+                                end={true}
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <BiUser size={20} />
+                                <span>Users</span>
+                            </NavLink>
+                        </div>
+                    </>
+                }
 
 
-                <div className="space-y-1 pl-8 pt-4">
-                    <NavLink
-                        to="/admin/article"
-                        end={true}
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                    >
-                        <BiMessageSquareEdit size={20} />
-                        <span>Articles</span>
-                    </NavLink>
-                    <NavLink
-                        to="/admin/article/category"
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                    >
-                        <span className='ml-7'>Categories</span>
-                    </NavLink>
-                </div>
-
-                <div className="space-y-1 pl-8 pt-4">
-                    <NavLink
-                        to="/admin/projects"
-                        end={true}
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                    >
-                        <BiCategory size={20} />
-                        <span>Projects</span>
-                    </NavLink>
-                    <NavLink
-                        to="/admin/projects/category"
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                    >
-                        <span className='ml-7'>Categories</span>
-                    </NavLink>
-                </div>
-
-                <div className="space-y-1 pl-8 pt-4">
-                    <NavLink
-                        to="/admin/users"
-                        end={true}
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                    >
-                        <BiUser size={20} />
-                        <span>Users</span>
-                    </NavLink>
-                </div>
+               
 
                 
 

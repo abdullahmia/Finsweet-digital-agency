@@ -53,9 +53,49 @@ export const authApi = apiSlice.injectEndpoints({
                 method: 'POST',
                 body
             })
+        }),
+        getUser: builder.query({
+            query: (userId) => `/auth/user/${userId}`
+        }),
+        updateUser: builder.mutation({
+            query: ({userId, body}) => ({
+                url: `/auth/user/${userId}`,
+                method: 'PATCH',
+                body
+            }),
+            async onQueryStarted(arg, { queryFulfilled, dispatch, getState }) {
+                try {
+                    const {userId} = arg;
+                    const result = await queryFulfilled;
+                    const {token} = getState()?.auth;
+
+                    // update the localstorage
+                    localStorage.setItem('user', JSON.stringify(result.data));
+
+                    // update the store
+                    dispatch(userLoggedIn({
+                        user: result.data,
+                        token: token
+                    }));
+
+                    // update cache
+                    dispatch(apiSlice.util.updateQueryData('getUser', userId, (draft) => {
+                        const {firstName, lastName, birthday, gender, phone, role} = result.data;
+                        draft.firstName = firstName;
+                        draft.lastName = lastName;
+                        draft.birthday = birthday;
+                        draft.gender = gender;
+                        draft.phone = phone;
+                        draft.role = role;
+                    }))
+                    
+                } catch (err) {
+                    // do nothing
+                }
+            }
         })
     })
 })
 
 
-export const { useRegisterUserMutation, useLoginUserMutation, useUserForgotPasswordMutation, useResetPasswordMutation, useChangePasswordMutation } = authApi;
+export const { useRegisterUserMutation, useLoginUserMutation, useUserForgotPasswordMutation, useResetPasswordMutation, useChangePasswordMutation, useGetUserQuery, useUpdateUserMutation } = authApi;

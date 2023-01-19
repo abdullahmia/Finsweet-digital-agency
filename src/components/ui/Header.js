@@ -1,10 +1,12 @@
 import { CiGrid41 } from "react-icons/ci";
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import useIsAuthenticated from "../../hooks/useIsAuthenticated";
 
 
 const Header = ({ toggoleDrower }) => {
     const isAuthenticated = useIsAuthenticated();
+    const {user} = useSelector(state => state.auth);
     return (
         <header className="bg-tintBlue py-6 lg:px-0 px-4">
             <nav className="container text-gray-100 flex items-center justify-between">
@@ -38,7 +40,9 @@ const Header = ({ toggoleDrower }) => {
                                 </li>
 
                                 {
-                                    isAuthenticated ? <li>
+                                    isAuthenticated ? user?.role === 'admin' ? <li>
+                                        <NavLink to="/admin" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Dashbaord</NavLink>
+                                    </li> : <li>
                                         <NavLink to="/account" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>My Account</NavLink>
                                     </li> : <>
                                             <li>
