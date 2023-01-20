@@ -40,14 +40,36 @@ export const articleCategoryApi = apiSlice.injectEndpoints({
                 }))
 
                 try {
-                    await queryFulfilled
+                    await queryFulfilled;
                     
                 } catch (err) {
                     patchResult.undo();
+                }
+            }
+        }),
+        // update article category
+        updateArticleCategory: builder.mutation({
+            query: ({slug, body}) => ({
+                url: `/article/category/${slug}`,
+                method: 'PATCH',
+                body
+            }),
+            async onQueryStarted(arg, {queryFulfilled, dispatch}) {
+                try {
+                    const {slug} = arg;
+                    const result = await queryFulfilled;
+                    const {category} = result.data;
+                    dispatch(apiSlice.util.updateQueryData('getArticleCategory', undefined, (draft) => {
+                        let draftCategory = draft.find((el) => el.slug === slug);
+                        draftCategory.name = category.name;
+                        draftCategory.slug = category.slug;
+                    }))
+                } catch (err) {
+                    // do nothing
                 }
             }
         })
     })
 })
 
-export const { useGetArticleCategoryQuery, useCreateArticleCategoryMutation, useDeleteArticleCategoryMutation } = articleCategoryApi;
+export const { useGetArticleCategoryQuery, useCreateArticleCategoryMutation, useDeleteArticleCategoryMutation, useUpdateArticleCategoryMutation } = articleCategoryApi;

@@ -2,7 +2,11 @@ import { createSlice } from '@reduxjs/toolkit';
 
 
 const initialState = {
-    editing: {}
+    isEditing:false,
+    editItem: {
+        name: '',
+        slug: '',
+    }
 }
 
 
@@ -11,10 +15,15 @@ export const articleCategorySlice = createSlice({
     initialState,
     reducers: {
         setEditing: (state, action) => {
-            state.editing = action.payload;
+            state.isEditing = true;
+            state.editItem = { name: action.payload.name, slug: action.payload.slug};
         },
         clearEditing: (state) => {
-            state.editing = {};
+            state.isEditing = false;
+            state.editItem = {
+                name: '',
+                slug: ''
+            }
         }
     }
 })
