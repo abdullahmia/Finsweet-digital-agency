@@ -2,7 +2,7 @@ import moment from 'moment';
 import { useDispatch } from 'react-redux';
 
 const CategoriesTable = ({ categories, deleteHandlers, setEditing }) => {
-    const { deleteArticleCategory, deleteCatLoading } = deleteHandlers;
+    const { deleteArticleCategory, deleteCatLoading } = deleteHandlers || {};
 
     // delete category handler
     const deleteCategoryHandler = (slug) => {

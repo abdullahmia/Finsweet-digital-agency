@@ -130,7 +130,7 @@ const routes = [
                 element: AddArticle
             },
             {
-                path: 'article/edit/:articleId',
+                path: 'article/edit/:slug',
                 element: EditArticle
             },
             {

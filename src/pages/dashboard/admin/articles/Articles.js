@@ -1,7 +1,56 @@
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import DashboardLayout from '../../../../components/layouts/DashboardLayout';
+import ArticleRow from '../../../../components/tableKits/ArticleRow';
+import { useGetArticlesQuery } from '../../../../features/article/articleApi';
 
 const Articles = () => {
+    const [title, setTitle] = useState('');
+
+    // pagination state
+    const [page, setPage] = useState(1);
+    
+    // get all articles
+    const { data: articles, isLoading } = useGetArticlesQuery(page);
+    const totalPages = articles?.totalPages;
+
+
+    // pagination page change handler
+    const handlePageChange = (page) => {
+        setPage(page);
+    }
+
+
+    // handle the search
+    const articleFilter = useSelector(state => state.filters);
+    useEffect(() => {
+        setTitle(articleFilter?.article?.title);
+    }, [articleFilter]);
+
+    // decide what to render based on search filter with articles
+    const renderArticles = () => {
+        if (articles?.articles?.length === 0 ) {
+            return <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
+                <td className="py-4 px-6 text-sm">
+                    We couldn't find any record
+                </td>
+                <td className="py-4 px-6 text-sm"></td>
+                <td className="py-4 px-6 text-sm"></td>
+                <td className="py-4 px-6 text-sm"></td>
+            </tr>
+        }
+        if (title) {
+            return articles?.articles?.filter(article => article.title.toLowerCase().includes(title.toLowerCase()))?.map((article, key) => (
+                <ArticleRow key={key} article={article} currentPage={page} />
+            ) )
+        } else {
+            return articles?.articles?.map((article, key) => (
+                <ArticleRow key={key} article={article} currentPage={page} />
+            ) )
+        }
+    }
+
     return (
         <DashboardLayout title="Articles">
             {/* Page Header */}
@@ -14,33 +63,12 @@ const Articles = () => {
                 </div>
             </div>
 
+
             {/* Filter */}
             <div className='shadow px-6 py-2 mt-8'>
-                <form className='flex items-center justify-between'>
-                    <div>
-                        <input type="text" placeholder='Search here...' className='input' />
-                    </div>
-                    <div>
-                        <select className='input'>
-                            <option value="Programming">-- Select Category --</option>
-                            <option value="Programming">Programming</option>
-                            <option value="Programming">Development</option>
-                            <option value="Programming">Marketing</option>
-                            <option value="Programming">UI/UX</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select className='input'>
-                            <option value="Programming">-- Select Status ---</option>
-                            <option value="Programming">Published</option>
-                            <option value="Programming">Draft</option>
-                        </select>
-                    </div>
-                    <div className='space-x-5'>
-                        <button type='submit' className='bg-darkBlue border border-darkBlue text-white px-6 py-2 rounded hover:bg-transparent hover:text-darkBlue transition text-sm'>Apply Filter</button>
-                        <button type='button' className='bg-indigo-500 border border-indigo-500 text-white px-6 py-2 rounded hover:bg-transparent hover:text-indigo-500 transition text-sm'>Reset</button>
-                    </div>
-                </form>
+                <div>
+                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} placeholder='Search here...' className='input w-full' />
+                </div>
             </div>
 
 
@@ -62,220 +90,44 @@ const Articles = () => {
                             <th scope="col" class="px-6 py-3">
                                 Date
                             </th>
-                            <th scope="col" class="px-6 py-3">
-                                Status
-                            </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/article/edit/blogid" className='hover:text-indigo-600 transition'>Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid" className='hover:text-green-600 transition'>View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/article/edit/blogid" className='hover:text-indigo-600 transition'>Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid" className='hover:text-green-600 transition'>View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/article/edit/blogid" className='hover:text-indigo-600 transition'>Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid" className='hover:text-green-600 transition'>View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/article/edit/blogid" className='hover:text-indigo-600 transition'>Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid" className='hover:text-green-600 transition'>View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/article/edit/blogid" className='hover:text-indigo-600 transition'>Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid" className='hover:text-green-600 transition'>View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/article/edit/blogid" className='hover:text-indigo-600 transition'>Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid" className='hover:text-green-600 transition'>View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-
-                        <tr className="bg-white border-b hover:bg-gray-50 font-poppins text-darkBlue shadow">
-                            <td className="p-4 w-64 group">
-                                How Filecoin is Up in a Week Could Take Care
-                                <div className='space-x-3 opacity-0 invisible group-hover:opacity-100 group-hover:visible mt-2'>
-                                    <Link to="/admin/article/edit/blogid" className='hover:text-indigo-600 transition'>Edit</Link>
-                                    <button className='text-red-500'>Trash</button>
-                                    <Link to="/blog/blogid" className='hover:text-green-600 transition'>View</Link>
-                                </div>
-                            </td>
-                            <td className="py-4 px-6 text-sm">
-                                Computer, Development
-                            </td>
-
-                            <td className="py-4 px-6">
-                                Abir Islam
-                            </td>
-                            <td className="py-4 px-6">
-                                01 March 2021
-                            </td>
-                            <td className="py-4 px-6">
-                                Published
-                            </td>
-                        </tr>
-
-                       
+                    <tbody>                        
+                        {
+                            isLoading ? <>Loading.....</> : (
+                                <>
+                                    {renderArticles()}
+                                </>
+                            )
+                        }
                     </tbody>
                 </table>
             </div>
+           
 
             {/* Pagination */}
 
-            <div className='flex justify-center item-center pt-10'>
-                <nav aria-label="Page navigation example">
-                    <ul class="inline-flex items-center -space-x-px">
-                        <li>
-                            <button class="block px-3 py-2 ml-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-l-lg hover:bg-gray-100 hover:text-gray-700">
-                                <span class="sr-only">Previous</span>
-                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                            </button>
-                        </li>
-                        <li>
-                            <button class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">1</button>
-                        </li>
-                        <li>
-                            <button class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">2</button>
-                        </li>
-                        <li>
-                            <button aria-current="page" class="z-10 px-3 py-2 leading-tight text-blue-600 border border-blue-300 bg-blue-50 hover:bg-blue-100">3</button>
-                        </li>
-                        <li>
-                            <button class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">4</button>
-                        </li>
-                        <li>
-                            <button class="px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">5</button>
-                        </li>
-                        <li>
-                            <button class="block px-3 py-2 leading-tight text-gray-500 bg-white border border-gray-300 rounded-r-lg hover:bg-gray-100 hover:text-gray-700">
-                                <span class="sr-only">Next</span>
-                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                            </button>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+            {
+                totalPages > 1 && <div className='flex justify-center item-center pt-10'>
+                    <nav aria-label="Page navigation example">
+                        <ul class="inline-flex items-center -space-x-px">
+
+                            {/* pagination button with total page */}
+                            {
+                                Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                                    <li>
+                                        <button onClick={() => handlePageChange(number)} class={`block px-3 py-2 ml-0 leading-tight text-gray-500  border hover:text-gray-700 ${page === number ? 'bg-blue-600 border-blue-400 text-white' : 'bg-white border-gray-300'}`}>
+                                            {number}
+                                        </button>
+                                    </li>
+                                ))
+                            }
+                        </ul>
+                    </nav>
+                </div>
+            }
+
+            
 
         </DashboardLayout>
     )

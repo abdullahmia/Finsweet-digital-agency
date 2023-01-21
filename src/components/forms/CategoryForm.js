@@ -5,13 +5,13 @@ import Circle from '../../components/loaders/Circle';
 const CategoryForm = ({ createHandler, isLoading, categoryEdit }) => {
   const [name, setName] = useState('');
   const [slug, setSlug] = useState('');
-  const { isEditing, editItem, clearEditing, handler } = categoryEdit;
+  const { isEditing, editItem, clearEditing, handler } = categoryEdit || {};
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setName(editItem.name);
-    setSlug(editItem.slug);
+    setName(editItem?.name);
+    setSlug(editItem?.slug);
   }, [editItem])
 
   

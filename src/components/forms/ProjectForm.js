@@ -45,9 +45,6 @@ const ProjectForm = ({ isEdit }) => {
                 setImages(oldArray => [...oldArray, reader.result])
             }
         })
-        // if (e.target.files[0]) {
-        //     setImages([...images, e.target.files[0]]);
-        // }
     };
 
 

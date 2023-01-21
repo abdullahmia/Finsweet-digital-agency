@@ -1,39 +1,36 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import toast from 'react-hot-toast';
 import { BiX } from 'react-icons/bi';
 import 'react-quill/dist/quill.snow.css';
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
 import CreatableSelect from 'react-select/creatable';
+import Circle from '../../components/loaders/Circle';
+import { useCreateArticleMutation } from '../../features/article/articleApi';
+import { useGetArticleCategoryQuery } from '../../features/articleCategory/articleCategoryApi';
 import Editor from '../custom/Editor';
 
-// animation on select
-const animatedComponents = makeAnimated();
+// all tags
+const globalTags = []
 
-// image uplaod file type
-const fileTypes = ["JPEG", "PNG", "GIF"];
-
-const colourOptions = [
-    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
-    { value: 'purple', label: 'Purple', color: '#5243AA' },
-    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-    { value: 'orange', label: 'Orange', color: '#FF8B00' },
-    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-    { value: 'green', label: 'Green', color: '#36B37E' },
-    { value: 'forest', label: 'Forest', color: '#00875A' },
-    { value: 'slate', label: 'Slate', color: '#253858' },
-    { value: 'silver', label: 'Silver', color: '#666666' },
-];
-
-const ArticleForm = ({isEdit}) => {
+const ArticleForm = ({isEdit, slug, article}) => {
+    const [title, setTitle] = useState('');
     const [categories, setCategories] = useState([]);
+    const [tagInput, setTagInput] = useState('')
     const [tags, setTags] = useState([]);
     const filePickerRef = useRef(null);
     const [image, setImage] = useState(null);
-    const [value, setValue] = useState('');
+    const [description, setDescription] = useState('');
+    const [shortDescription, setShortDescirption] = useState('');
 
     // add photo to image
     const addPhotoToPost = (e) => {
+        const files = Array.from(e.target.files);
+        files.forEach(file => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = () => {
+                setImage(reader.result);
+            }
+        })
         if (e.target.files[0]) {
             setImage(e.target.files[0]);
         }
@@ -44,21 +41,82 @@ const ArticleForm = ({isEdit}) => {
         setImage(null);
     }
 
-    
 
+    // categories
+    const { data: allCategories, isLoading: categoryFetching } = useGetArticleCategoryQuery();
+
+    // add category handler with handling checkbox if checked or not then add to categories state
+    const addCategoryHandler = (e) => {
+        const { value, checked } = e.target;
+        if (checked) {
+            setCategories([...categories, value]);
+        } else {
+            setCategories(categories.filter(category => category !== value));
+        }
+    }
+
+    // add tag handler
+    const addTagHandler = (e) => {
+        e.preventDefault();
+
+        if (tagInput !== '') {
+            setTags([...tags, tagInput]);
+            setTagInput("");
+        }
+
+    }
+
+    // remove tag handler
+    const removeTagHandler = (tag) => {
+        setTags(tags.filter(t => t !== tag));
+    }
+
+  
+
+    // add article
+    const [createArticle, {isLoading, data, isSuccess, isError}] = useCreateArticleMutation();
+    useEffect(() => {
+        if (isSuccess) {
+            // resetForm();
+            toast.success('Article has been posted!');
+        }
+        if (isError) {
+            toast.error('Something went wrong!');
+        }
+    }, [isSuccess, isError, data]);
+
+    // reset forms
+    const resetForm = () => {
+        setTitle("");
+        setShortDescirption("");
+        setDescription("");
+        setImage(null);
+        setTags([]);
+        setCategories([]);
+    }
+
+    // add category handler
+    const addArticleHandler = (e) => {
+        e.preventDefault();
+        createArticle({ title, categories, shortDescription, description, image, tags});
+    } 
 
     return (
         <div className='shadow px-6 pb-10 pt-4 bg-white font-poppins'>
-            <form className='space-y-8'>
+            <form className='space-y-8' onSubmit={addArticleHandler}>
                 <div className='flex items-center justify-between flex-wrap border-b py-2'>
                     <h2 className='text-xl'>
                         {isEdit ? 'Edit Article' : 'Add a new Article'}
                     </h2>
-                    <button className='black-sm-btn'>Publish</button>
+                    <button className='black-sm-btn'>
+                        {
+                            isLoading ? <span className='flex items-center gap-2'><Circle />Publishing</span> : 'Publish'
+                        }
+                    </button>
                 </div>
                 <div>
                     <label className="text-gray-600 mb-2 block">Title</label>
-                    <input type="text" className="input" required />
+                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className="input" required />
                 </div>
 
                 <div className='flex items-center gap-10'>
@@ -71,15 +129,13 @@ const ArticleForm = ({isEdit}) => {
                                 >
                                     <BiX className="text-white h-5" />
                                 </div>
-
                                 {
-                                    image?.name && image?.size && <img
-                                        src={URL.createObjectURL(image)}
+                                    image && <img
+                                        src={image}
                                         className='w-full h-48 object-contain'
                                         alt=""
                                     />
                                 }
-
                             </div>
                         }
                         {
@@ -128,32 +184,42 @@ const ArticleForm = ({isEdit}) => {
                         }
                     </div>
                     <div className='lg:w-1/2 w-full space-y-4'>
-                        <div>
+                        <div className=''>
                             <label className="text-gray-600 mb-2 block">Categories</label>
-                            <Select
-                                closeMenuOnSelect={false}
-                                components={animatedComponents}
-                                defaultValue={[colourOptions[4], colourOptions[5]]}
-                                isMulti
-                                options={colourOptions}
-                                onChange={(categories) => setCategories(categories)}
-                            />
+                            <div className='h-44 overflow-y-scroll'>
+                                {
+                                    categoryFetching ? <>Loading...</> : allCategories?.map((category, key) => (
+                                        <div class="flex items-center mb-4">
+                                            <input id={key} type="checkbox" value={category._id} onChange={addCategoryHandler} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 " />
+                                            <label for={key} class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{category.name}</label>
+                                        </div>
+                                    ))
+                                }
+                            </div>
+
                         </div>
-                        <div>
+                        {/* tag input with react-select */}
+                        <div className=''>
                             <label className="text-gray-600 mb-2 block">Tags</label>
-                            <CreatableSelect isMulti options={tags} onChange={(tags) => setTags(tags)} />
-                        </div>
+                            <CreatableSelect
+                                isMulti
+                                name="colors"
+                                options={globalTags}
+                                onChange={(tag) => setTags([...tags, tag])}
+                                required
+                            />
+                            </div>
                     </div>
                 </div>
 
                 <div>
                     <label className="text-gray-600 mb-2 block">Short Descripotions</label>
-                    <textarea className='input' rows="3"></textarea>
+                    <textarea className='input' value={shortDescription} onChange={(e) => setShortDescirption(e.target.value)} rows="3" required></textarea>
                 </div>
 
                 <div>
                     <label className="text-gray-600 mb-2 block">Descripotions</label>
-                    <Editor value={value} handleChange={setValue} />
+                    <Editor value={description} handleChange={setDescription} />
                 </div>  
 
             </form>
