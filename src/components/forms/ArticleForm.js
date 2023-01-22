@@ -1,25 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import toast from 'react-hot-toast';
-import { BiX } from 'react-icons/bi';
+import { BiPlus, BiX } from 'react-icons/bi';
 import 'react-quill/dist/quill.snow.css';
-import CreatableSelect from 'react-select/creatable';
 import Circle from '../../components/loaders/Circle';
 import { useCreateArticleMutation } from '../../features/article/articleApi';
 import { useGetArticleCategoryQuery } from '../../features/articleCategory/articleCategoryApi';
 import Editor from '../custom/Editor';
 
-// all tags
-const globalTags = []
-
 const ArticleForm = ({isEdit, slug, article}) => {
     const [title, setTitle] = useState('');
     const [categories, setCategories] = useState([]);
-    const [tagInput, setTagInput] = useState('')
     const [tags, setTags] = useState([]);
     const filePickerRef = useRef(null);
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState('');
     const [shortDescription, setShortDescirption] = useState('');
+    const [tag, setTag] = useState('');
 
     // add photo to image
     const addPhotoToPost = (e) => {
@@ -54,30 +50,13 @@ const ArticleForm = ({isEdit, slug, article}) => {
             setCategories(categories.filter(category => category !== value));
         }
     }
-
-    // add tag handler
-    const addTagHandler = (e) => {
-        e.preventDefault();
-
-        if (tagInput !== '') {
-            setTags([...tags, tagInput]);
-            setTagInput("");
-        }
-
-    }
-
-    // remove tag handler
-    const removeTagHandler = (tag) => {
-        setTags(tags.filter(t => t !== tag));
-    }
-
   
 
     // add article
     const [createArticle, {isLoading, data, isSuccess, isError}] = useCreateArticleMutation();
     useEffect(() => {
         if (isSuccess) {
-            // resetForm();
+            resetForm();
             toast.success('Article has been posted!');
         }
         if (isError) {
@@ -198,17 +177,43 @@ const ArticleForm = ({isEdit, slug, article}) => {
                             </div>
 
                         </div>
-                        {/* tag input with react-select */}
+                        {/* tag input */}
                         <div className=''>
                             <label className="text-gray-600 mb-2 block">Tags</label>
-                            <CreatableSelect
-                                isMulti
-                                name="colors"
-                                options={globalTags}
-                                onChange={(tag) => setTags([...tags, tag])}
-                                required
-                            />
+                            {/* simple tag with delete btn */}
+                            <div className='flex flex-wrap'>
+                                {
+                                    tags.map((tag, key) => (
+                                        <div onClick={() => {
+                                            const newTags = tags.filter((t, i) => i !== key);
+                                            setTags(newTags);
+                                        }} className='cursor-pointer flex items-center bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700 mr-2 mb-2'>
+                                            <span className='mr-2'>{tag}</span>
+                                            <button className='text-gray-400 hover:text-gray-500'>
+                                                <BiX size={18} />
+                                            </button>
+                                        </div>
+                                    ))
+                                }
                             </div>
+
+                            {/* tag input with valina html intpu and submit btn */}
+                            <div className='flex gap-2'>
+                                <input
+                                    type="text"
+                                    className='input focus:outline-none'
+                                    placeholder='Add tag'
+                                    value={tag}
+                                    onChange={(e) => setTag(e.target.value)}
+                                />
+                                <button type='button' onClick={() => {
+                                    if (tag) {
+                                        setTags([...tags, tag]);
+                                        setTag('');
+                                    }
+                                }} className='bg-darkBlue text-white px-4 rounded'><BiPlus size={20} /></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

@@ -25,6 +25,8 @@ export const articleApi = apiSlice.injectEndpoints({
                     }))
 
                     // update categories total articles cache data if article has categories
+
+                    
                     // get the article categories from the arg
                     if (arg.categories.length > 0) {
                         arg.categories.forEach(category => {
@@ -35,18 +37,6 @@ export const articleApi = apiSlice.injectEndpoints({
                             }))
                         })
                     }
-
-                    // if (article.categories.length > 0) {
-                    //     console.log('article has categories', article.categories);
-                    //     article.categories.forEach(category => {
-                    //         // update category total articles cache data 
-                    //         dispatch(apiSlice.util.updateQueryData('getArticleCategory', undefined, (draft) => {
-                    //             let categoryIndex = draft.findIndex((categoryItem) => categoryItem._id === category);
-                    //             draft[categoryIndex].articles += 1;
-                    //         }
-                    //         ))
-                    //     })
-                    // }
                     
 
                 } catch (err) {
@@ -88,9 +78,42 @@ export const articleApi = apiSlice.injectEndpoints({
         }),
         getArticle: builder.query({
             query: (slug) => `/article/${slug}`
+        }),
+        // update article with slug
+        updateArticle: builder.mutation({
+            query: ({ id, body }) => ({
+                url: `/article/${id}`,
+                method: 'PATCH',
+                body
+            }),
+            invalidatesTags: ['ArticleCategory'],
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+                try {
+                    const result = await queryFulfilled;
+                    const { article } = result.data;
+                    
+                    // update the article cache data from all articles
+                    dispatch(apiSlice.util.updateQueryData('getArticles', 1, (draft) => {
+                        let cachedArticle = draft.articles.find((article) => article._id === arg.id);
+                        cachedArticle.title = article.title;
+                        cachedArticle.slug = article.slug;
+                        cachedArticle.description = article.description;
+                        cachedArticle.content = article.content;
+                        cachedArticle.image = article.image;
+                        cachedArticle.categories = article.categories;
+                        cachedArticle.updatedAt = article.updatedAt;
+                        cachedArticle.tags = article.tags;
+                        cachedArticle.createdAt = article.createdAt;
+                    }))
+
+                } catch (err) {
+                    // do nothing
+                }
+            }
+
         })
         
     })
 })
 
-export const { useCreateArticleMutation, useGetArticlesQuery, useDeleteArticleMutation, useGetArticleQuery } = articleApi;
+export const { useCreateArticleMutation, useGetArticlesQuery, useDeleteArticleMutation, useGetArticleQuery, useUpdateArticleMutation } = articleApi;

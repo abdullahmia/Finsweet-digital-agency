@@ -4,7 +4,8 @@ import { apiSlice } from "../api/apiSlice";
 export const articleCategoryApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         getArticleCategory: builder.query({
-            query: () => `/article/category`
+            query: () => `/article/category`,
+            providesTags: ['ArticleCategory'],
         }),
         createArticleCategory: builder.mutation({
             query: (body) => ({

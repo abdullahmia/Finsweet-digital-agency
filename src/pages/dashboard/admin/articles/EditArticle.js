@@ -1,36 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BiX } from 'react-icons/bi';
+import { toast } from 'react-hot-toast';
+import { BiPlus, BiX } from 'react-icons/bi';
 import 'react-quill/dist/quill.snow.css';
 import { useParams } from "react-router-dom";
-import Select from 'react-select';
-import makeAnimated from 'react-select/animated';
-import CreatableSelect from 'react-select/creatable';
 import Editor from "../../../../components/custom/Editor";
+import Image from '../../../../components/custom/Image';
 import DashboardLayout from "../../../../components/layouts/DashboardLayout";
 import Circle from "../../../../components/loaders/Circle";
-import { useGetArticlesQuery } from "../../../../features/article/articleApi";
+import { useGetArticleQuery, useUpdateArticleMutation } from "../../../../features/article/articleApi";
 import { useGetArticleCategoryQuery } from "../../../../features/articleCategory/articleCategoryApi";
 
-
-// animation on select
-const animatedComponents = makeAnimated();
-
-// global tags
-const gloablTags = []
-
-
-export const colourOptions = [
-    { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
-    { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
-    { value: 'purple', label: 'Purple', color: '#5243AA' },
-    { value: 'red', label: 'Red', color: '#FF5630', isFixed: true },
-    { value: 'orange', label: 'Orange', color: '#FF8B00' },
-    { value: 'yellow', label: 'Yellow', color: '#FFC400' },
-    { value: 'green', label: 'Green', color: '#36B37E' },
-    { value: 'forest', label: 'Forest', color: '#00875A' },
-    { value: 'slate', label: 'Slate', color: '#253858' },
-    { value: 'silver', label: 'Silver', color: '#666666' },
-];
 
 const EditArticle = () => {
     const [title, setTitle] = useState('');
@@ -40,21 +19,17 @@ const EditArticle = () => {
     const [image, setImage] = useState(null);
     const [description, setDescription] = useState('');
     const [shortDescription, setShortDescirption] = useState('');
-    const [allCategories, setAllcategories] = useState([]);
-    const [defaultCategories, setDefaultCategories] = useState([]);
+    const [tag, setTag] = useState('');
+
 
     // add photo to image
     const addPhotoToPost = (e) => {
-        const files = Array.from(e.target.files);
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                setImage(reader.result);
-            }
-        })
-        if (e.target.files[0]) {
-            setImage(e.target.files[0]);
+        const file = e.target.files[0];
+
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+            setImage(reader.result);
         }
     };
 
@@ -67,41 +42,69 @@ const EditArticle = () => {
     const {slug} = useParams();
 
     // categories
-    const { data: getCategories, isLoading} = useGetArticleCategoryQuery();
-    // formating categories and set on all category state
-    useEffect(() => {
-        if (getCategories) {
-            const categories = [];
-            getCategories.map((category) => {
-                return categories.push({ value: category._id, label: category.name });
-            })
-            setAllcategories(categories);
+    const { data: allCategories, isLoading: categoryFetching } = useGetArticleCategoryQuery();
+    // add category handler with handling checkbox if checked or not then add to categories state
+    const addCategoryHandler = (e) => {
+        const { value, checked } = e.target;
+        console.log(value, checked);
+        if (checked) {
+            setCategories([...categories, value]);
+        } else {
+            setCategories(categories.filter(category => category !== value));
         }
-        
-    }, [getCategories])
+    }
+
+    
 
     // get the article
-    const { data: articles } = useGetArticlesQuery();
-    console.log(articles);
-    // useEffect(() => {
-    //     if (editArticleSuccess) {
-    //         const {title, shortDescription, description, categories} = editArticle;
-    //         setTitle(title);
-    //         setShortDescirption(shortDescription);
-    //         setDescription(description)
-            
-    //         // set selected categories with filtered by allCategories formating to react select
-    //         const selectedCategories = categories.map((category) => {
-    //             return allCategories.filter((cat) => cat.value === category._id)[0];
-    //         })
-    //         setDefaultCategories(selectedCategories);
-    //     }
-    // }, [editArticleSuccess, editArticle, allCategories])
+    const { data: article, isLoading, isSuccess: editArticleSuccess } = useGetArticleQuery(slug);
+    useEffect(() => {
+        if (editArticleSuccess) {
+            if (article) {
+                setTitle(article.title);
+                setShortDescirption(article.shortDescription);
+                setDescription(article.description);
+                setImage(article.image);
+                setTags(article.tags);
+
+                // set default categoreis _id for checkbox
+                const defaultCategories = article.categories.map(category => category._id);
+                setCategories(defaultCategories);
+
+                // set default tags label and value on tags state
+                setTags(article.tags);
+                
+                
+            }
+        }
+    }, [article, editArticleSuccess])
+
+    // check if image is binary or not
+    const isBinary = str => typeof str === 'string' && str.startsWith('data:');
+
 
     // Edit Article Handler
+    const [updateArticle, { isLoading: updateArticleLoading, isSuccess: updateSuccess, isError: updateError }] = useUpdateArticleMutation();
+
     const EditAticleHandler = (e) => {
         e.preventDefault();
+        if (title && categories && tags && image && description && shortDescription) {
+            updateArticle({id: article._id, body: { title, categories, tags, image: isBinary(image) ? image : null, description, shortDescription}});
+        } else {
+            // an error toast
+            toast.error('Please fill all fields');
+        }
     }
+
+
+    useEffect(() => {
+        if (updateSuccess) {
+            toast.success('Article updated successfully');
+        }
+        if (updateError) {
+            toast.error('Something went wrong');
+        }
+    }, [updateSuccess, updateError])
 
     return (
         <DashboardLayout title="Edit Article">
@@ -114,7 +117,7 @@ const EditArticle = () => {
                             </h2>
                             <button className='black-sm-btn'>
                                 {
-                                    isLoading ? <span className='flex items-center gap-2'><Circle />Updateting</span> : 'Update'
+                                    updateArticleLoading ? <span className='flex items-center gap-2'><Circle />Updateting</span> : 'Update'
                                 }
                             </button>
                         </div>
@@ -134,11 +137,7 @@ const EditArticle = () => {
                                             <BiX className="text-white h-5" />
                                         </div>
                                         {
-                                            image && <img
-                                                src={image}
-                                                className='w-full h-48 object-contain'
-                                                alt=""
-                                            />
+                                            image && isBinary(image) ? <img src={image} alt="" className="w-full h-48 object-cover rounded" /> : <Image src={image} alt="" className="w-full h-48 object-cover rounded" />
                                         }
                                     </div>
                                 }
@@ -187,29 +186,71 @@ const EditArticle = () => {
                                     </div>
                                 }
                             </div>
-                            {
-                                !isLoading && <div className='lg:w-1/2 w-full space-y-4'>
-                                    <div>
-                                        <label className="text-gray-600 mb-2 block">Categories</label>
-                                        <Select
-                                            closeMenuOnSelect={false}
-                                            components={animatedComponents}
-                                            isMulti
-                                            defaultValue={[colourOptions[0]]}
-                                            options={allCategories}
-                                            onChange={(categories) => {
-                                                setCategories([...categories?.map((cat) => cat.value)]);
-                                            }}
-                                        />
+                            <div className='lg:w-1/2 w-full space-y-4'>
+                                <div className=''>
+                                    <label className="text-gray-600 mb-2 block">Categories</label>
+                                    <div className='h-44 overflow-y-scroll'>
+                                        {
+                                            categoryFetching ? <>Loading...</> : allCategories?.map((category, key) => (
+                                                <div class="flex items-center mb-4">
+                                                    
+                                                    {/* set chected true if category is on categoreis state */}
+                                                    <input
+                                                        id={key}
+                                                        name={category.name}
+                                                        type="checkbox"
+                                                        value={category._id}
+                                                        class="form-checkbox h-5 w-5 text-indigo-600"
+                                                        checked={categories.includes(category._id)}
+                                                        onChange={addCategoryHandler}
+                                                    />
+
+                                                    <label for={key} class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{category.name}</label>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
-                                    <div>
-                                        <label className="text-gray-600 mb-2 block">Tags</label>
-                                        <CreatableSelect isMulti options={gloablTags} onChange={(tagHandler) => {
-                                            setTags([...tagHandler?.map((tag) => tag.value)])
-                                        }} />
+
+                                </div>
+                                
+                                {/* tag input */}
+                                <div className=''>
+                                    <label className="text-gray-600 mb-2 block">Tags</label>
+                                    {/* simple tag with delete btn */}
+                                    <div className='flex flex-wrap'>
+                                        {
+                                            tags.map((tag, key) => (
+                                                <div onClick={() => {
+                                                    const newTags = tags.filter((t, i) => i !== key);
+                                                    setTags(newTags);
+                                                }} className='cursor-pointer flex items-center bg-gray-200 rounded-full px-3 py-1 text-sm font-medium text-gray-700 mr-2 mb-2'>
+                                                    <span className='mr-2'>{tag}</span>
+                                                    <button className='text-gray-400 hover:text-gray-500'>
+                                                        <BiX size={18} />
+                                                    </button>
+                                                </div>
+                                            ))
+                                        }
+                                    </div>
+
+                                    {/* tag input with valina html intpu and submit btn */}
+                                    <div className='flex gap-2'>
+                                        <input
+                                            type="text"
+                                            className='input focus:outline-none'
+                                            placeholder='Add tag'
+                                            value={tag}
+                                            onChange={(e) => setTag(e.target.value)}
+                                        />
+                                        <button type='button' onClick={() => {
+                                            if (tag) {
+                                                setTags([...tags, tag]);
+                                                setTag('');
+                                            }
+                                        }} className='bg-darkBlue text-white px-4 rounded'><BiPlus size={20} /></button>
                                     </div>
                                 </div>
-                            }
+                            </div>
                         </div>
 
                         <div>
