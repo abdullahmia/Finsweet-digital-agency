@@ -1,97 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
-import toast from 'react-hot-toast';
+import React from 'react';
 import { BiPlus, BiX } from 'react-icons/bi';
 import 'react-quill/dist/quill.snow.css';
 import Circle from '../../components/loaders/Circle';
-import { useCreateArticleMutation } from '../../features/article/articleApi';
-import { useGetArticleCategoryQuery } from '../../features/articleCategory/articleCategoryApi';
 import Editor from '../custom/Editor';
+import Image from '../custom/Image';
 
-const ArticleForm = ({isEdit, slug, article}) => {
-    const [title, setTitle] = useState('');
-    const [categories, setCategories] = useState([]);
-    const [tags, setTags] = useState([]);
-    const filePickerRef = useRef(null);
-    const [image, setImage] = useState(null);
-    const [description, setDescription] = useState('');
-    const [shortDescription, setShortDescirption] = useState('');
-    const [tag, setTag] = useState('');
+const ArticleForm = ({ articleData, isEdit }) => {
+    const { inputs, inputsHandler, addArticleHandler, loadings, editAticleHandler } = articleData || {};
+    const { title, tags, image, description, shortDescription, tag, allCategories, categories } = inputs || {};
+    const { setTitle, addCategoryHandler, setTags, setDescription, setShortDescirption, setTag, addPhotoToPost, resetImage, filePickerRef } = inputsHandler || {};
+    const {isBinary} = articleData?.methods || {};
 
-    // add photo to image
-    const addPhotoToPost = (e) => {
-        const files = Array.from(e.target.files);
-        files.forEach(file => {
-            const reader = new FileReader();
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
-                setImage(reader.result);
-            }
-        })
-        if (e.target.files[0]) {
-            setImage(e.target.files[0]);
-        }
-    };
-
-    // reset Image
-    const resetImage = () => {
-        setImage(null);
-    }
-
-
-    // categories
-    const { data: allCategories, isLoading: categoryFetching } = useGetArticleCategoryQuery();
-
-    // add category handler with handling checkbox if checked or not then add to categories state
-    const addCategoryHandler = (e) => {
-        const { value, checked } = e.target;
-        if (checked) {
-            setCategories([...categories, value]);
-        } else {
-            setCategories(categories.filter(category => category !== value));
-        }
-    }
-  
-
-    // add article
-    const [createArticle, {isLoading, data, isSuccess, isError}] = useCreateArticleMutation();
-    useEffect(() => {
-        if (isSuccess) {
-            resetForm();
-            toast.success('Article has been posted!');
-        }
-        if (isError) {
-            toast.error('Something went wrong!');
-        }
-    }, [isSuccess, isError, data]);
-
-    // reset forms
-    const resetForm = () => {
-        setTitle("");
-        setShortDescirption("");
-        setDescription("");
-        setImage(null);
-        setTags([]);
-        setCategories([]);
-    }
-
-    // add category handler
-    const addArticleHandler = (e) => {
-        e.preventDefault();
-        createArticle({ title, categories, shortDescription, description, image, tags});
-    } 
+    if (loadings.isLoading) return <Circle />;
 
     return (
         <div className='shadow px-6 pb-10 pt-4 bg-white font-poppins'>
-            <form className='space-y-8' onSubmit={addArticleHandler}>
+            <form className='space-y-8' onSubmit={!isEdit ? addArticleHandler : editAticleHandler}>
                 <div className='flex items-center justify-between flex-wrap border-b py-2'>
                     <h2 className='text-xl'>
-                        {isEdit ? 'Edit Article' : 'Add a new Article'}
+                        {isEdit ? "Update Article" : "Add Article"}
                     </h2>
-                    <button className='black-sm-btn'>
-                        {
-                            isLoading ? <span className='flex items-center gap-2'><Circle />Publishing</span> : 'Publish'
-                        }
-                    </button>
+                    {
+                        isEdit ? <button className='black-sm-btn'>
+                            {
+                                loadings.updateArticleLoading ? <span className='flex items-center gap-2'><Circle />Updating</span> : 'Update'
+                            }
+                        </button> : <button className='black-sm-btn'>
+                            {
+                                    loadings.createArticleLoading ? <span className='flex items-center gap-2'><Circle />Publishing</span> : 'Publish'
+                            }
+                        </button>
+                    }
                 </div>
                 <div>
                     <label className="text-gray-600 mb-2 block">Title</label>
@@ -109,12 +48,13 @@ const ArticleForm = ({isEdit, slug, article}) => {
                                     <BiX className="text-white h-5" />
                                 </div>
                                 {
-                                    image && <img
-                                        src={image}
-                                        className='w-full h-48 object-contain'
-                                        alt=""
-                                    />
+                                    isEdit ? <>
+                                        {
+                                            image && isBinary(image) ? <img src={image} alt="" className="w-full h-48 object-cover rounded" /> : <Image src={image} alt="" className="w-full h-48 object-cover rounded" />
+                                        }
+                                    </> : <img src={image} alt="" className="w-full h-48 object-cover rounded" />
                                 }
+                                
                             </div>
                         }
                         {
@@ -167,9 +107,20 @@ const ArticleForm = ({isEdit, slug, article}) => {
                             <label className="text-gray-600 mb-2 block">Categories</label>
                             <div className='h-44 overflow-y-scroll'>
                                 {
-                                    categoryFetching ? <>Loading...</> : allCategories?.map((category, key) => (
+                                    loadings.categoryFetching ? <>Loading...</> : allCategories?.map((category, key) => (
                                         <div class="flex items-center mb-4">
-                                            <input id={key} type="checkbox" value={category._id} onChange={addCategoryHandler} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 " />
+
+                                            {/* set chected true if category is on categoreis state */}
+                                            <input
+                                                id={key}
+                                                name={category.name}
+                                                type="checkbox"
+                                                value={category._id}
+                                                class="form-checkbox h-5 w-5 text-indigo-600"
+                                                checked={categories.includes(category._id)}
+                                                onChange={addCategoryHandler}
+                                            />
+
                                             <label for={key} class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">{category.name}</label>
                                         </div>
                                     ))
@@ -177,6 +128,7 @@ const ArticleForm = ({isEdit, slug, article}) => {
                             </div>
 
                         </div>
+
                         {/* tag input */}
                         <div className=''>
                             <label className="text-gray-600 mb-2 block">Tags</label>
@@ -219,13 +171,13 @@ const ArticleForm = ({isEdit, slug, article}) => {
 
                 <div>
                     <label className="text-gray-600 mb-2 block">Short Descripotions</label>
-                    <textarea className='input' value={shortDescription} onChange={(e) => setShortDescirption(e.target.value)} rows="3" required></textarea>
+                    <textarea className='input' value={shortDescription} onChange={(e) => setShortDescirption(e.target.value)} rows="3"></textarea>
                 </div>
 
                 <div>
                     <label className="text-gray-600 mb-2 block">Descripotions</label>
                     <Editor value={description} handleChange={setDescription} />
-                </div>  
+                </div>
 
             </form>
         </div>
