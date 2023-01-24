@@ -2,6 +2,8 @@ import Layout from "../../components/layouts/Layout";
 import BlogItems from "../../components/sections/blogs/BlogItems";
 
 const Blogs = () => {
+  
+
   return (
       <Layout title="Blogs | Sweet Agency">
           <section className="py-24 lg:px-0 px-4">
@@ -11,9 +13,8 @@ const Blogs = () => {
                       <p className="font-poppins text-gray-600 text-center">Andrew Jonson Posted on 27th January 2021</p>
                       
                   </div>
-
                   <div>
-                    <BlogItems items={12} />
+                      <BlogItems items={12} />
                   </div>
               </div>
           </section>
