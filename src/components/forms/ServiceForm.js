@@ -15,7 +15,7 @@ const ServiceForm = ({ isEdit, serviceProps = {} }) => {
                 isEdit ? 'Update Service' : 'New Service'
               }
             </h2>
-            <button className='black-sm-btn'>
+            <button className='black-sm-btn flex gap-1'>
               {isLoading ? <><Circle /> {isEdit ? 'Updating' : 'Publishing'}</> : isEdit ? 'Update' : 'Publish'}
             </button>
           </div>

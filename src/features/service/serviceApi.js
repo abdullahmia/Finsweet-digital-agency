@@ -62,7 +62,6 @@ export const serviceApi = apiSlice.injectEndpoints({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const result = await queryFulfilled;
-                    const { service } = result.data;
 
                     dispatch(apiSlice.util.updateQueryData('getServices', undefined, (draft) => {
                         let service = draft.find(service => service._id == arg.id);
@@ -71,6 +70,15 @@ export const serviceApi = apiSlice.injectEndpoints({
                         service.description = arg.body.description;
                         service.features = arg.body.features;
                         service.isFeatured = arg.body.isFeatured;
+                    }))
+
+
+                    dispatch(apiSlice.util.updateQueryData('getService', arg.id, (draft) => {
+                        draft.name = arg.body.name;
+                        draft.price = arg.body.price;
+                        draft.description = arg.body.description;
+                        draft.features = arg.body.features;
+                        draft.isFeatured = arg.body.isFeatured;
                     }))
 
                 } catch (err) {
