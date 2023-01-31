@@ -30,14 +30,14 @@ export const articleCategoryApi = apiSlice.injectEndpoints({
         }),
         // delete article category
         deleteArticleCategory: builder.mutation({
-            query: (slug) => ({
-                url: `/article/category/${slug}`,
+            query: (id) => ({
+                url: `/article/category/${id}`,
                 method: 'DELETE',
             }),
-            async onQueryStarted(slug, { queryFulfilled, dispatch }) {
+            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
                 
                 const patchResult = dispatch(apiSlice.util.updateQueryData('getArticleCategory', undefined, (draft) => {
-                    return draft.filter((category) => category.slug !== slug);
+                    return draft.filter((category) => category._id !== arg);
                 }))
 
                 try {
@@ -50,18 +50,18 @@ export const articleCategoryApi = apiSlice.injectEndpoints({
         }),
         // update article category
         updateArticleCategory: builder.mutation({
-            query: ({slug, body}) => ({
-                url: `/article/category/${slug}`,
+            query: ({id, body}) => ({
+                url: `/article/category/${id}`,
                 method: 'PATCH',
                 body
             }),
             async onQueryStarted(arg, {queryFulfilled, dispatch}) {
                 try {
-                    const {slug} = arg;
+                    const {id} = arg;
                     const result = await queryFulfilled;
                     const {category} = result.data;
                     dispatch(apiSlice.util.updateQueryData('getArticleCategory', undefined, (draft) => {
-                        let draftCategory = draft.find((el) => el.slug === slug);
+                        let draftCategory = draft.find((el) => el._id === id);
                         draftCategory.name = category.name;
                         draftCategory.slug = category.slug;
                     }))

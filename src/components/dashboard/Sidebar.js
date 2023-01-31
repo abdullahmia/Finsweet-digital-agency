@@ -1,4 +1,4 @@
-import { BiCart, BiCategory, BiLockAlt, BiMessageSquareEdit, BiNotepad, BiUser, BiUserPin } from 'react-icons/bi';
+import { BiCart, BiCategory, BiLayer, BiLockAlt, BiMessageSquareEdit, BiNotepad, BiUser, BiUserPin } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from "react-router-dom";
 import avatar from '../../assets/images/team/member-1.png';
@@ -40,38 +40,6 @@ const Sidebar = () => {
             {/* <!-- profile NavLinks --> */}
             <div className="mt-6 bg-white shadow rounded p-4 divide-y divide-gray-200 space-y-4 text-gray-600">
                 {/* <!-- single NavLink --> */}
-                <div className="space-y-1 pl-8">
-                    <NavLink
-                        to="/account"
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                        end={true}
-                    >
-                        <BiUserPin size={20} />
-                        <span>Profile Informaton</span>
-                    </NavLink>
-
-                    <NavLink
-                        to="/account/change-password"
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                        end={true}
-                    >
-                        <BiLockAlt size={20} />
-                        <span>Change Password</span>
-                    </NavLink>
-
-                </div>
-
-
-                <div className="space-y-1 pl-8 pt-4">
-                    <NavLink
-                        to="/account/history"
-                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
-                    >
-                        <BiCart size={20} />
-                        <span>My Purchases</span>
-                    </NavLink>
-
-                </div>
 
                 {
                     user?.role === 'admin' && <>
@@ -124,6 +92,17 @@ const Sidebar = () => {
 
                         <div className="space-y-1 pl-8 pt-4">
                             <NavLink
+                                to="/admin/service"
+                                end={true}
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <BiLayer size={20} />
+                                <span>Services</span>
+                            </NavLink>
+                        </div>
+
+                        <div className="space-y-1 pl-8 pt-4">
+                            <NavLink
                                 to="/admin/users"
                                 end={true}
                                 className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
@@ -133,6 +112,41 @@ const Sidebar = () => {
                             </NavLink>
                         </div>
                     </>
+                }
+
+                <div className="space-y-1 pl-8 pt-6">
+                    <NavLink
+                        to="/account"
+                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                        end={true}
+                    >
+                        <BiUserPin size={20} />
+                        <span>Profile Informaton</span>
+                    </NavLink>
+
+                    <NavLink
+                        to="/account/change-password"
+                        className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                        end={true}
+                    >
+                        <BiLockAlt size={20} />
+                        <span>Change Password</span>
+                    </NavLink>
+
+                </div>
+
+
+                {
+                    user?.role === 'user' && <div className="space-y-1 pl-8 pt-4">
+                        <NavLink
+                            to="/account/history"
+                            className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                        >
+                            <BiCart size={20} />
+                            <span>My Purchases</span>
+                        </NavLink>
+
+                    </div>
                 }
 
 

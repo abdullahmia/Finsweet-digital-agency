@@ -29,6 +29,9 @@ import Dashboard from "../pages/dashboard/admin/Dashboard";
 import AddProject from "../pages/dashboard/admin/projects/AddProject";
 import ProjectCategories from "../pages/dashboard/admin/projects/ProjectCategories";
 import ProjectsPage from "../pages/dashboard/admin/projects/Projects";
+import AddService from "../pages/dashboard/admin/services/AddService";
+import EditService from "../pages/dashboard/admin/services/EditService";
+import Services from "../pages/dashboard/admin/services/Services";
 
 const routes = [
     {
@@ -148,6 +151,18 @@ const routes = [
             {
                 path: 'projects/category',
                 element: ProjectCategories
+            },
+            {
+                path: 'service',
+                element: Services
+            },
+            {
+                path: 'service/new',
+                element: AddService
+            },
+            {
+                path: 'service/edit/:id',
+                element: EditService
             }
         ]
     },

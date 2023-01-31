@@ -59,11 +59,11 @@ const ArticleCategories = () => {
   return (
     <DashboardLayout title="Article Categories">
         <div className="bg-white px-6 py-3 rounded">
-        <CategoryForm createHandler={createArticleCategory} isLoading={createCatLoading} categoryEdit={categoryEdit} />
+          <CategoryForm createHandler={createArticleCategory} isLoading={createCatLoading} categoryEdit={categoryEdit} />
         </div>
 
       <div className="bg-white px-6 py-3 rounded mt-8">
-        <CategoriesTable categories={articleCategories} deleteHandlers={{ deleteArticleCategory, deleteCatLoading }} setEditing={setEditing} />
+        <CategoriesTable categories={articleCategories} deleteHandlers={{ deleteCategory: deleteArticleCategory, deleteCatLoading }} setEditing={setEditing} />
       </div>
     </DashboardLayout>
   )

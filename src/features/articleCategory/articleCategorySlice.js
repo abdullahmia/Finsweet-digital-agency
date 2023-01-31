@@ -5,7 +5,7 @@ const initialState = {
     isEditing:false,
     editItem: {
         name: '',
-        slug: '',
+        id: '',
     }
 }
 
@@ -16,13 +16,13 @@ export const articleCategorySlice = createSlice({
     reducers: {
         setEditing: (state, action) => {
             state.isEditing = true;
-            state.editItem = { name: action.payload.name, slug: action.payload.slug};
+            state.editItem = { name: action.payload.name, id: action.payload.id };
         },
         clearEditing: (state) => {
             state.isEditing = false;
             state.editItem = {
                 name: '',
-                slug: ''
+                id: ''
             }
         }
     }

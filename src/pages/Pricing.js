@@ -1,8 +1,10 @@
-import { BiCaretRight } from 'react-icons/bi';
+import ServiceCard from "../components/card/ServiceCard";
 import Layout from "../components/layouts/Layout";
 import Faqs from '../components/sections/faqs/Faqs';
+import { useGetServicesQuery } from "../features/service/serviceApi";
 
 const Pricing = () => {
+    const { data: services, isLoading } = useGetServicesQuery();
     return (
         <Layout title="Pricing | Sweet Agency">
             <section className="py-24 lg:px-0 px-4">
@@ -12,11 +14,26 @@ const Pricing = () => {
                         <p className="font-poppins text-gray-600">When you’re ready to go beyond prototyping in Figma, Webflow is ready to help you bring your designs to life — without coding them.</p>
                     </div>
 
+                    {
+                        isLoading ? "Loading..." : services.length === 0 ? "No services found." : (
+                            <>
+                                <div className='mt-14 grid lg:grid-cols-3 grid-cols-1 gap-5'>
+                                    {
+                                        services && services.map((service, key) => (
+                                            <ServiceCard key={key} service={service} />
+                                        ))
+                                    }
+                                </div>
+                            
+                            </>
+                        )
+                    }
 
                     {/* Pricing */}
                     <div className='mt-14 grid lg:grid-cols-3 grid-cols-1 gap-5'>
                         {/* Single Price */}
-                        <div className="bg-gray-100 p-10 rounded">
+
+                        {/* <div className="bg-gray-100 p-10 rounded">
                             <h2 className="font-poppins text-darkBlue text-[35px] font-semibold flex items-center gap-4">
                                 $299
                                 <span className="capitalize text-blue-500 text-[14px] font-normal">Per Design</span>
@@ -157,7 +174,7 @@ const Pricing = () => {
                                 <button className='black-btn'>Get Started</button>
                             </div>
 
-                        </div>
+                        </div> */}
                     </div>
                </div>
             </section>

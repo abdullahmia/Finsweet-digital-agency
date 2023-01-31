@@ -89,7 +89,7 @@ const Login = () => {
 
                             <button className='black-btn w-full' disabled={isLoading}>
                                 {
-                                    isLoading ? <Circle /> : 'Register'
+                                    isLoading ? <Circle /> : 'Login'
                                 }
                             </button>
                         </form>
