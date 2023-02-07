@@ -1,14 +1,45 @@
+import { io } from "socket.io-client";
 import { apiSlice } from "../api/apiSlice";
-
 
 export const orderApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         // get user orders
         getUserOrders: builder.query({
-            query: () => `/order/user`
+            query: () => `/order/user`,
+            async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData, dispatch, getState }) {
+                const socket = io('http://localhost:8000');
+
+
+                socket.on('newNotification', (data) => {
+                    const { order } = data || {};
+
+                    // update the order status
+                    if (order) {
+                        updateCachedData((draft) => {
+                            let orderData = draft.find(order => order._id === order._id);
+                            orderData.status = order.status;
+                        });
+                    }
+
+                });
+            }
         }),
         getSingleOrder: builder.query({
-            query: (id) => `/order/${id}`
+            query: (id) => `/order/${id}`,
+            async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData, dispatch, getState }) {
+                const socket = io('http://localhost:8000');
+
+                socket.on('newNotification', (data) => {
+                    const { order } = data || {};
+                    // update the order status
+                    if (order) {
+                        updateCachedData((draft) => {
+                            draft.order.status = order.status;
+                        });
+                    }
+
+                });
+            }
         }),
         getAllOrders: builder.query({
             query: () => `/order/`

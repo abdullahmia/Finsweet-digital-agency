@@ -21,6 +21,7 @@
     "react-router-dom": "^6.6.1",
     "react-scripts": "5.0.1",
     "react-select": "^5.7.0",
+    "socket.io-client": "^4.6.0",
     "sweetalert2": "^11.7.0",
     "swiper": "^8.4.5",
     "web-vitals": "^2.1.4"
