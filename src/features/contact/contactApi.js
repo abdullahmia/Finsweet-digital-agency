@@ -9,9 +9,12 @@ export const contactApi = apiSlice.injectEndpoints({
                 method: 'POST',
                 body
             })
+        }),
+        getContacts: builder.query({
+            query: () => '/contact'
         })
     })
 })
 
 
-export const { useAddContactMutation } = contactApi;
+export const { useAddContactMutation, useGetContactsQuery } = contactApi;

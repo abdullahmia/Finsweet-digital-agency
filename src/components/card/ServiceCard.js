@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiCaretRight } from 'react-icons/bi';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useMakePaymentQuery } from '../../features/payment/paymentApi';
 import { useDeleteServiceMutation } from '../../features/service/serviceApi';
+import Circle from '../loaders/Circle';
 
 
 const ServiceCard = ({ service = {}}) => {
+    const [triggerPayment, setTriggerPayment] = useState(true);
     const {user} = useSelector((state) => state.auth);
     const { name, description, price, isFeatured, features, _id } = service;
 
@@ -33,6 +36,29 @@ const ServiceCard = ({ service = {}}) => {
             }
         })
     }
+
+
+
+    // make payment handler
+    const { data: initiatePaymentData, isLoading, isSuccess, isError } = useMakePaymentQuery(_id, { skip: triggerPayment });
+
+    const triggerPaymentHandler = () => {
+        setTriggerPayment(false);
+    }
+
+    useEffect(() => {
+        if (isSuccess) {
+            window.location.href = initiatePaymentData?.GatewayPageURL;
+        }
+        if (isError) {
+            setTriggerPayment(true);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+            })
+        }
+    }, [isSuccess, initiatePaymentData, isError])
 
 
   return (
@@ -71,7 +97,17 @@ const ServiceCard = ({ service = {}}) => {
 
               {
                   user && user?.role !== 'admin' && (<div className='flex items-center justify-center mt-8'>
-                      <button className='black-btn'>Get Started</button>
+                      {
+                          isFeatured ? <button onClick={triggerPaymentHandler} className='yellow-btn'>
+                            {
+                                  isLoading ? <Circle /> : 'Get Started'
+                            }
+                          </button> : <button onClick={triggerPaymentHandler} className='black-btn'>
+                                  {
+                                      isLoading ? <Circle /> : 'Get Started'
+                                  }
+                          </button>
+                      }
                   </div>)
               }
 

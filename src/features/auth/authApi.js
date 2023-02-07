@@ -31,7 +31,7 @@ export const authApi = apiSlice.injectEndpoints({
                 } catch(error) {
                     // do
                 }
-            } 
+            }
         }),
         userForgotPassword: builder.mutation({
             query: (body) => ({

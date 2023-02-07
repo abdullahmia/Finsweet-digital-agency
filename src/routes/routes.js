@@ -26,12 +26,15 @@ import ArticleCategories from "../pages/dashboard/admin/articles/ArticleCategori
 import AdminArticles from "../pages/dashboard/admin/articles/Articles";
 import EditArticle from "../pages/dashboard/admin/articles/EditArticle";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
+import Messages from "../pages/dashboard/admin/messages/Messages";
+import AllOrders from "../pages/dashboard/admin/orders/AllOrders";
 import AddProject from "../pages/dashboard/admin/projects/AddProject";
 import ProjectCategories from "../pages/dashboard/admin/projects/ProjectCategories";
 import ProjectsPage from "../pages/dashboard/admin/projects/Projects";
 import AddService from "../pages/dashboard/admin/services/AddService";
 import EditService from "../pages/dashboard/admin/services/EditService";
 import Services from "../pages/dashboard/admin/services/Services";
+import OrderComplete from "../pages/OrderComplete";
 
 const routes = [
     {
@@ -163,8 +166,21 @@ const routes = [
             {
                 path: 'service/edit/:id',
                 element: EditService
-            }
+            },
+            {
+                path: 'orders',
+                element: AllOrders
+            },
+            {
+                path: "messages",
+                element: Messages
+            },
         ]
+    },
+    {
+        path: '/order-complete',
+        element: OrderComplete,
+        role: ['user']
     },
     {
         path: '*',

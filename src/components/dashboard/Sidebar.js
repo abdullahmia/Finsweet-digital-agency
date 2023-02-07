@@ -1,4 +1,4 @@
-import { BiCart, BiCategory, BiLayer, BiLockAlt, BiMessageSquareEdit, BiNotepad, BiUser, BiUserPin } from 'react-icons/bi';
+import { BiCart, BiCategory, BiLayer, BiLockAlt, BiMailSend, BiMessageSquareEdit, BiNotepad, BiUser, BiUserPin } from 'react-icons/bi';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from "react-router-dom";
 import avatar from '../../assets/images/team/member-1.png';
@@ -52,6 +52,17 @@ const Sidebar = () => {
                             >
                                 <BiNotepad size={20} />
                                 <span>Dashbaord</span>
+                            </NavLink>
+                        </div>
+
+                        <div className="space-y-1 pl-8 pt-4">
+                            <NavLink
+                                to="/admin/orders"
+                                end={true}
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <BiMessageSquareEdit size={20} />
+                                <span>Orders</span>
                             </NavLink>
                         </div>
 
@@ -109,6 +120,16 @@ const Sidebar = () => {
                             >
                                 <BiUser size={20} />
                                 <span>Users</span>
+                            </NavLink>
+                        </div>
+                        <div className="space-y-1 pl-8 pt-4">
+                            <NavLink
+                                to="/admin/messages"
+                                end={true}
+                                className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                            >
+                                <BiMailSend size={20} />
+                                <span>Messages</span>
                             </NavLink>
                         </div>
                     </>
