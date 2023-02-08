@@ -1,4 +1,4 @@
-import { io } from "socket.io-client";
+import socket from "../../config/socket";
 import { apiSlice } from "../api/apiSlice";
 
 export const orderApi = apiSlice.injectEndpoints({
@@ -7,12 +7,7 @@ export const orderApi = apiSlice.injectEndpoints({
         getUserOrders: builder.query({
             query: () => `/order/user`,
             async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData, dispatch, getState }) {
-                const socket = io('http://localhost:8000');
-
-
-                socket.on('newNotification', (data) => {
-                    const { order } = data || {};
-
+                socket.on('updateOrder', (order) => {
                     // update the order status
                     if (order) {
                         updateCachedData((draft) => {
@@ -22,15 +17,19 @@ export const orderApi = apiSlice.injectEndpoints({
                     }
 
                 });
+
+                // create a new order
+                socket.on('newOrder', (order) => {
+                    updateCachedData((draft) => {
+                        draft.unshift(order);
+                    });
+                });
             }
         }),
         getSingleOrder: builder.query({
             query: (id) => `/order/${id}`,
             async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData, dispatch, getState }) {
-                const socket = io('http://localhost:8000');
-
-                socket.on('newNotification', (data) => {
-                    const { order } = data || {};
+                socket.on('updateOrder', (order) => {
                     // update the order status
                     if (order) {
                         updateCachedData((draft) => {
@@ -42,7 +41,15 @@ export const orderApi = apiSlice.injectEndpoints({
             }
         }),
         getAllOrders: builder.query({
-            query: () => `/order/`
+            query: () => `/order/`,
+            async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
+                // create a new order
+                socket.on('newOrder', (order) => {
+                    updateCachedData((draft) => {
+                        draft.unshift(order);
+                    });
+                });
+            }
         }),
         updateOrder: builder.mutation({
             query: ({id, body}) => ({

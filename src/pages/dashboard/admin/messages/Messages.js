@@ -1,10 +1,37 @@
 import moment from "moment";
+import { BiTrash } from "react-icons/bi";
+import Swal from 'sweetalert2';
 import DashboardLayout from "../../../../components/layouts/DashboardLayout";
-import { useGetContactsQuery } from "../../../../features/contact/contactApi";
+import { useDeleteContactMutation, useGetContactsQuery } from "../../../../features/contact/contactApi";
 
 const Messages = () => {
     const { data: messages, isLoading } = useGetContactsQuery();
-    console.log(messages);
+
+    // delete message handler
+    const [deleteContact] = useDeleteContactMutation();
+
+    const deleteMessageHandler = (id) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteContact(id);
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+    }
+
+
   return (
     <DashboardLayout title="Message | Smart Agency">
           <div class="relative overflow-x-auto">
@@ -28,6 +55,9 @@ const Messages = () => {
                           </th>
                           <th scope="col" class="px-6 py-3">
                               Date
+                          </th>
+                          <th scope="col" class="px-6 py-3">
+                              Action
                           </th>
                       </tr>
                   </thead>
@@ -58,6 +88,12 @@ const Messages = () => {
                                                 <td className="py-4 px-6 ">
                                                     {moment(message.createdAt).format('MMMM Do YYYY')}
                                                 </td>
+
+                                                  <td className="py-4 px-6 ">
+                                                      <button onClick={() => deleteMessageHandler(message?._id)} className="bg-red-500 text-white p-2 rounded hover:bg-red-600 transition">
+                                                          <BiTrash size={20} />
+                                                      </button>
+                                                  </td>
                                             </tr>
                                           ))
                                         ) : (
@@ -65,6 +101,7 @@ const Messages = () => {
                                                   <td className="py-4 px-6 text-sm">
                                                       We couldn't find any record
                                                   </td>
+                                                  <td className="py-4 px-6 text-sm"></td>
                                                   <td className="py-4 px-6 text-sm"></td>
                                                   <td className="py-4 px-6 text-sm"></td>
                                                   <td className="py-4 px-6 text-sm"></td>

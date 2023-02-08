@@ -94,8 +94,8 @@ const Header = ({ toggoleDrower }) => {
                                             <div className="border-t border-gray-200">
                                                 <ul className="p-4 h-64 overflow-y-scroll">
                                                     {
-                                                        currentUserNotifications.length > 0 ? currentUserNotifications.map((notification, index) => (
-                                                            <li className="flex items-center gap-4 mb-4" key={index}>
+                                                        currentUserNotifications?.length > 0 ? currentUserNotifications.map((notification, index) => (
+                                                            <Link to={notification?.link} className="flex items-center gap-4 mb-4" key={index}>
                                                                 <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
                                                                     <BiBell size={27} />
                                                                 </div>
@@ -103,7 +103,7 @@ const Header = ({ toggoleDrower }) => {
                                                                     <p className="text-[14px] font-[400] font-poppins text-gray-700">{notification.message}</p>
                                                                     <p className="text-[10px] font-[400] font-poppins text-gray-500">{moment(notification.createdAt).fromNow()}</p>
                                                                 </div>
-                                                            </li>
+                                                            </Link>
                                                         )) : <li className="flex items-center gap-4 mb-4">
                                                             <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center">
                                                                 <BiBell size={27} />
@@ -112,7 +112,6 @@ const Header = ({ toggoleDrower }) => {
                                                                 <h3 className="text-[16px] font-[500] font-poppins text-gray-500">No notifications</h3>
                                                             </div>
                                                         </li>
-
                                                     }
                                                     
 

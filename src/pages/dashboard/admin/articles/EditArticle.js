@@ -43,7 +43,6 @@ const EditArticle = () => {
     // add category handler with handling checkbox if checked or not then add to categories state
     const addCategoryHandler = (e) => {
         const { value, checked } = e.target;
-        console.log(value, checked);
         if (checked) {
             setCategories([...categories, value]);
         } else {

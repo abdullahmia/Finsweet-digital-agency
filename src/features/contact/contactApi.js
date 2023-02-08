@@ -1,7 +1,5 @@
-import toast from 'react-hot-toast';
-import { io } from "socket.io-client";
+import socket from '../../config/socket';
 import { apiSlice } from "../api/apiSlice";
-import { incrementUnread } from '../notification/notificationSlice';
 
 export const contactApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -14,42 +12,34 @@ export const contactApi = apiSlice.injectEndpoints({
         }),
         getContacts: builder.query({
             query: () => '/contact',
-            async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData, dispatch }) {
-                const socket = io('http://localhost:8000');
+            async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData, dispatch, getState }) {
                 socket.on('newContact', (contact) => {
                     updateCachedData((draft) => {
                         draft.push(contact);
                     })
-
-                    // increment unread notifications
-                    dispatch(incrementUnread());
-                    
-
-                    // create a toast message if the user is on the admin dashboard
-                    if (window.location.pathname === '/admin/contacts') {
-                        toast.success(`${contact.name} has sent you a message!`, {
-                            position: 'bottom-right',
-                            style: {
-                                background: '#333',
-                                color: '#fff',
-                            },
-                            iconTheme: {
-                                primary: '#fff',
-                                secondary: '#333',
-                            },
-                        });
-                    }
-                    
-
                 })
-                cacheDataLoaded();
-                cacheEntryRemoved(() => {
-                    socket.disconnect();
-                })
+            }
+        }),
+        deleteContact: builder.mutation({
+            query: (id) => ({
+                url: `/contact/${id}`,
+                method: 'DELETE'
+            }),
+            async onQueryStarted(id, { dispatch, queryFulfilled }) {
+                let patchResult = dispatch(apiSlice.util.updateQueryData('getContacts', undefined, (draft) => {
+                    let contacts = draft.filter((contact) => contact._id !== id);
+                    return contacts;
+                }))
+
+                try {
+                    await queryFulfilled;
+                } catch (err) {
+                    patchResult.undo();
+                }
             }
         })
     })
 })
 
 
-export const { useAddContactMutation, useGetContactsQuery } = contactApi;
+export const { useAddContactMutation, useGetContactsQuery, useDeleteContactMutation } = contactApi;

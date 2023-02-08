@@ -5,7 +5,6 @@ import { useGetServicesQuery } from '../../../../features/service/serviceApi';
 
 const Services = () => {
   const { data: services, isLoading } = useGetServicesQuery();
-  console.log(services)
   return (
     <DashboardLayout title="Services | Smart Agency">
           <div className='shadow-lg px-6 py-4 font-poppins flex items-center justify-between flex-wrap bg-white'>

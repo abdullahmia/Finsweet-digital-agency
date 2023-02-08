@@ -15,6 +15,14 @@ const MyPurchases = () => {
                                     <PurchasesCard key={order._id} order={order} />
                                 ))
                             }
+                            {
+                                // if there is no order history
+                                orderHistory?.length === 0 && (
+                                    <div className="bg-gray-200 py-3 px-3 rounded">
+                                        <h1 className="">No Order History</h1>
+                                    </div>
+                                )
+                            }
                         </div>
                     )
                 }

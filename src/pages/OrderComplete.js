@@ -7,7 +7,6 @@ import PaymentSuccess from '../components/paymentStatus/PaymentSuccess';
 const OrderComplete = () => {
     const location = useLocation();
     const status = location.search.split('=')[1]
-    console.log(status)
     return (
         <Layout title="Order Complete">
             {status === 'success' && <PaymentSuccess />}

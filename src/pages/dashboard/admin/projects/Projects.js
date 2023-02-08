@@ -6,7 +6,6 @@ import { useGetAllProjectsQuery } from '../../../../features/project/projectApi'
 
 const Projects = () => {
   const { isLoading, data: projects } = useGetAllProjectsQuery();
-  console.log(isLoading, projects);
   return (
     <DashboardLayouat title="Projects">
       <div className='shadow-lg px-6 py-4 font-poppins flex items-center justify-between flex-wrap bg-white'>

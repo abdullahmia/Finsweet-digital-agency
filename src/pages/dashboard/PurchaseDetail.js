@@ -27,6 +27,7 @@ const PurchaseDetail = () => {
         }
     }, [isError, errorResponse])
 
+
     return (
         <DashboardLayout title={transactionId ? transactionId.toUpperCase() : 'Loading...'}>
             {
