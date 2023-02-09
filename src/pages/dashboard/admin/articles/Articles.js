@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import DashboardLayout from '../../../../components/layouts/DashboardLayout';
+import TableLoader from '../../../../components/loaders/TableLoader';
 import ArticleRow from '../../../../components/tableKits/ArticleRow';
 import { useGetArticlesQuery } from '../../../../features/article/articleApi';
 
@@ -73,36 +74,33 @@ const Articles = () => {
 
 
             {/* Tables */}
+            {
+                isLoading ? <TableLoader /> : <div class="relative overflow-x-auto">
+                    <table class="w-full text-sm text-left text-gray-500">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3">
+                                    Title
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Categories
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Author
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Date
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {renderArticles()}
+                        </tbody>
 
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                        <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Title
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Categories
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Author
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Date
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>                        
-                        {
-                            isLoading ? <>Loading.....</> : (
-                                <>
-                                    {renderArticles()}
-                                </>
-                            )
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    </table>
+                </div>
+            }
+            
            
 
             {/* Pagination */}

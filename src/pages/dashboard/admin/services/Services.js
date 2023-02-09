@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import ServiceCard from '../../../../components/card/ServiceCard';
 import DashboardLayout from '../../../../components/layouts/DashboardLayout';
+import ServiceLoader from '../../../../components/loaders/ServiceLoader';
 import { useGetServicesQuery } from '../../../../features/service/serviceApi';
 
 const Services = () => {
@@ -17,7 +18,11 @@ const Services = () => {
           </div>
 
         {
-          isLoading ? "Loading..." : services.length === 0 ? "No services found." : (
+        isLoading ? <ServiceLoader col={2} /> : services.length === 0 ? <div className=''>
+            <div className='flex items-center justify-center mt-5'>
+              <h2 className='text-2xl font-poppins text-gray-500'>No Services Found</h2>
+            </div>
+        </div> : (
             <>
               <div className='grid lg:grid-cols-2 grid-cols-1 gap-5 mt-7'>
                 {

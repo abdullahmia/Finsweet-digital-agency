@@ -63,7 +63,7 @@ const ArticleCategories = () => {
         </div>
 
       <div className="bg-white px-6 py-3 rounded mt-8">
-        <CategoriesTable categories={articleCategories} deleteHandlers={{ deleteCategory: deleteArticleCategory, deleteCatLoading }} setEditing={setEditing} />
+        <CategoriesTable isLoading={isLoading} categories={articleCategories} deleteHandlers={{ deleteCategory: deleteArticleCategory, deleteCatLoading }} setEditing={setEditing} />
       </div>
     </DashboardLayout>
   )

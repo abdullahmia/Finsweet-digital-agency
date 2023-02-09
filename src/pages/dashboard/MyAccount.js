@@ -3,6 +3,7 @@ import toast from 'react-hot-toast';
 import { useSelector } from "react-redux";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import Circle from '../../components/loaders/Circle';
+import AddressFormLoader from "../../components/loaders/forms/AddressFormLoader";
 import { useGetUserQuery, useUpdateUserMutation } from "../../features/auth/authApi";
 
 
@@ -29,7 +30,7 @@ const MyAccount = () => {
     }, [fetchUserSuccess, userData])
 
     // update handler
-    const [updateUser, {isLoading: updateUserLoding, isSuccess: updateUserSuccess, data: updatedUser, isError: updateUserIsError, error: updateUserResponseError}] = useUpdateUserMutation();
+    const [updateUser, {isLoading: updateUserLoding, isSuccess: updateUserSuccess, data: updatedUser}] = useUpdateUserMutation();
     const updateUserHandler = (e) => {
         e.preventDefault();
 
@@ -48,9 +49,10 @@ const MyAccount = () => {
         <DashboardLayout title="My Account">
             <div className="w-full font-poppins px-6 pt-6 pb-14 shadow rounded bg-white">
                 <h3 className="text-lg font-medium capitalize mb-4">Manage Address</h3>
+                
 
                 {
-                    isLoading ? <>Loading</> : <form className="space-y-7" onSubmit={updateUserHandler}>
+                    isLoading ? <AddressFormLoader /> : <form className="space-y-7" onSubmit={updateUserHandler}>
                         <div className="grid lg:grid-cols-2 grid-cols-1 gap-7">
                             <div>
                                 <label className="text-gray-600 mb-2 block">First Name</label>

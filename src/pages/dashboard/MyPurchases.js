@@ -1,5 +1,6 @@
 import PurchasesCard from "../../components/card/PurchasesCard";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
+import OrdersLoader from '../../components/loaders/OrdersLoader';
 import { useGetUserOrdersQuery } from "../../features/order/orderApi";
 
 const MyPurchases = () => {
@@ -8,7 +9,7 @@ const MyPurchases = () => {
         <DashboardLayout title="My Purchases">
             <div className="w-full font-poppins px-6">
                 {
-                    isLoading ? (<>Loading....</>) : (
+                    isLoading ? (<OrdersLoader />) : (
                         <div className="space-y-5">
                             {
                                 orderHistory && orderHistory.map((order) => (

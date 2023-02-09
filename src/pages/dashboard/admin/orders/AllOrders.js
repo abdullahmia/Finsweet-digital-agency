@@ -1,12 +1,13 @@
 import PurchasesCard from "../../../../components/card/PurchasesCard";
 import DashboardLayout from "../../../../components/layouts/DashboardLayout";
+import OrdersLoader from "../../../../components/loaders/OrdersLoader";
 import { useGetAllOrdersQuery } from "../../../../features/order/orderApi";
 
 const AllOrders = () => {
     const { data: allOrders, isLoading } = useGetAllOrdersQuery()
   return (
     <DashboardLayout title="All Orders">
-        {isLoading && 'Loading'}
+        {isLoading && <OrdersLoader />}
           <div className="space-y-5">
               {
                   allOrders && allOrders.map((order) => (

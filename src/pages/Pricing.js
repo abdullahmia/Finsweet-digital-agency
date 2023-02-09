@@ -1,5 +1,6 @@
 import ServiceCard from "../components/card/ServiceCard";
 import Layout from "../components/layouts/Layout";
+import ServiceLoader from "../components/loaders/ServiceLoader";
 import Faqs from '../components/sections/faqs/Faqs';
 import { useGetServicesQuery } from "../features/service/serviceApi";
 
@@ -15,7 +16,7 @@ const Pricing = () => {
                     </div>
 
                     {
-                        isLoading ? "Loading..." : services.length === 0 ? "No services found." : (
+                        isLoading ? <div className="mt-14"><ServiceLoader /></div> : services.length === 0 ? "No services found." : (
                             <>
                                 <div className='mt-14 grid lg:grid-cols-3 grid-cols-1 gap-5'>
                                     {
