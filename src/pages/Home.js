@@ -17,7 +17,6 @@ import Layout from "../components/layouts/Layout";
 import BlogItems from '../components/sections/blogs/BlogItems';
 import Faqs from '../components/sections/faqs/Faqs';
 import Inquiry from '../components/sections/Inquiry/Inquiry';
-import ProjectItems from '../components/sections/projects/ProjectItems';
 
 const Home = () => {
   return (
@@ -78,7 +77,7 @@ const Home = () => {
 
 
       {/* Proejcts */}
-      <ProjectItems items={2} />
+      {/* <ProjectItems items={2} /> */}
 
 
       {/* Features */}

@@ -11,7 +11,6 @@ import Home from "../pages/Home";
 import NotFound from "../pages/NotFound";
 import Pricing from "../pages/Pricing";
 import ProjectCase from "../pages/projects/ProjectCase";
-import Projects from "../pages/projects/Projects";
 
 // authenticated routes
 import ChangePassword from "../pages/dashboard/ChangePassword";
@@ -28,9 +27,6 @@ import EditArticle from "../pages/dashboard/admin/articles/EditArticle";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Messages from "../pages/dashboard/admin/messages/Messages";
 import AllOrders from "../pages/dashboard/admin/orders/AllOrders";
-import AddProject from "../pages/dashboard/admin/projects/AddProject";
-import ProjectCategories from "../pages/dashboard/admin/projects/ProjectCategories";
-import ProjectsPage from "../pages/dashboard/admin/projects/Projects";
 import AddService from "../pages/dashboard/admin/services/AddService";
 import EditService from "../pages/dashboard/admin/services/EditService";
 import Services from "../pages/dashboard/admin/services/Services";
@@ -52,11 +48,11 @@ const routes = [
         element: Pricing,
         role: ['*']
     },
-    {
-        path: "/project",
-        element: Projects,
-        role: ['*']
-    },
+    // {
+    //     path: "/project",
+    //     element: Projects,
+    //     role: ['*']
+    // },
     {
         path: "/project/:projectSlug",
         element: ProjectCase,
@@ -143,18 +139,18 @@ const routes = [
                 path: 'article/category',
                 element: ArticleCategories
             },
-            {
-                path: 'projects',
-                element: ProjectsPage
-            },
-            {
-                path: 'projects/new',
-                element: AddProject
-            },
-            {
-                path: 'projects/category',
-                element: ProjectCategories
-            },
+            // {
+            //     path: 'projects',
+            //     element: ProjectsPage
+            // },
+            // {
+            //     path: 'projects/new',
+            //     element: AddProject
+            // },
+            // {
+            //     path: 'projects/category',
+            //     element: ProjectCategories
+            // },
             {
                 path: 'service',
                 element: Services

@@ -55,9 +55,9 @@ const Header = ({ toggoleDrower }) => {
                                 <li>
                                     <NavLink to="/pricing" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Pricing</NavLink>
                                 </li>
-                                <li>
+                                {/* <li>
                                     <NavLink to="/project" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Projects</NavLink>
-                                </li>
+                                </li> */}
                                 <li>
                                     <NavLink to="/blog" className={(navInfo) => navInfo.isActive ? "text-[16px] font-[500] font-poppins text-gray-100" : "text-[16px] font-[500] font-poppins text-gray-300 hover:text-gray-100 transition"}>Blogs</NavLink>
                                 </li>
