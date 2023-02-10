@@ -28,6 +28,10 @@ const ResetPassword = () => {
     const handleResetPassword = async (data) => {
         const { password, confirmPassword } = data;
 
+        if (!password || !confirmPassword) {
+            setError('Please fill all the fields');
+        }
+
         if (password !== confirmPassword) {
             setError('Password does not match');
             return;

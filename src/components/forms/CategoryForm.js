@@ -41,7 +41,7 @@ const CategoryForm = ({ createHandler, isLoading, categoryEdit }) => {
     <form className="font-poppins" onSubmit={isEditing ? editCategoryHandler : createCategoryHandler}>
       {isEditing && <button onClick={clearEdtingHanler} className='text-sm'>Clear</button>}
         <div className="flex gap-4">
-            <input type="text" placeholder="Add new category" value={name} onChange={(e) => setName(e.target.value)} className="input flex-1" />
+            <input type="text" placeholder="Add new category" value={name} onChange={(e) => setName(e.target.value)} className="input flex-1" required />
             <button type="submit" className="black-sm-btn">
           {isLoading ? <Circle /> : isEditing ? 'Edit' : 'Add'}
             </button>

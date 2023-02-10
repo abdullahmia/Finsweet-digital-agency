@@ -18,6 +18,13 @@ const Register = () => {
     const [registerUser, { isLoading, isSuccess, data, isError, error: responseError }] = useRegisterUserMutation();
 
     const handleRegister = (data) => {
+        setError('');
+
+        if (!data.firstName || !data.lastName || !data.email || !data.password) {
+            setError('Please fill all the fields');
+            return;
+        }
+
         registerUser(data);
         reset();
     }

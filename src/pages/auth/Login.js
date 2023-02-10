@@ -17,7 +17,11 @@ const Login = () => {
     // handle user
     const [loginUser, {isLoading, isSuccess, data, isError, error: responseError}] = useLoginUserMutation();
     const handleLogin = (data) => {
-        
+        // checking the fields
+        if (!data.email || !data.password) {
+            setError('Please fill all the fields');
+            return;
+        }
         loginUser(data);
     }
 

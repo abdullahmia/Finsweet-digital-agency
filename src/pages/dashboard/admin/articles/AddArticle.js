@@ -75,6 +75,13 @@ const AddArticle = () => {
   // add category handler
   const addArticleHandler = (e) => {
     e.preventDefault();
+
+    // check all fields
+    if (!title || !shortDescription || !description || !image || !categories.length || !tags.length) {
+      toast.error('Please fill all the fields!');
+      return;
+    }
+
     createArticle({ title, categories, shortDescription, description, image, tags });
   }
 

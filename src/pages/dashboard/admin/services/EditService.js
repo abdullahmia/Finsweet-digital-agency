@@ -32,6 +32,12 @@ const EditService = () => {
     const [updateService, {isLoading, isError, isSuccess, error, data}] = useUpdateServiceMutation();
     const editServiceHandler = (e) => {
         e.preventDefault();
+
+        if (!name || !price || !description || !features.length) {
+            toast.error('Please fill all the fields');
+            return;
+        }
+
         updateService({id: service._id, body: {name, price, description, isFeatured, features}});
     }
 

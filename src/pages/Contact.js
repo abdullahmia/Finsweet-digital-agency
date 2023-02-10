@@ -10,6 +10,12 @@ const Contact = () => {
     const [addContact, {isLoading, isSuccess, data, isError, error}] = useAddContactMutation()
     
     const addContactHandler = (data) => {
+
+        if (!data.name || !data.email || !data.category || !data.subject || !data.message) {
+            toast.error('Please fill all the fields');
+            return;
+        }
+
         addContact(data);
         reset();
     }

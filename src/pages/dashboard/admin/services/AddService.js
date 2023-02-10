@@ -18,6 +18,13 @@ const AddService = () => {
     // submit form
     const addServiceHandler = (e) => {
         e.preventDefault();
+
+        // check if all the fields are filled
+        if (!name || !price || !description || !features.length) {
+            toast.error('Please fill all the fields');
+            return;
+        }
+
         addService({name, price, description, isFeatured, features});
     }
 
