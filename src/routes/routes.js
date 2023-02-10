@@ -30,6 +30,7 @@ import AllOrders from "../pages/dashboard/admin/orders/AllOrders";
 import AddService from "../pages/dashboard/admin/services/AddService";
 import EditService from "../pages/dashboard/admin/services/EditService";
 import Services from "../pages/dashboard/admin/services/Services";
+import Users from "../pages/dashboard/admin/users/Users";
 import OrderComplete from "../pages/OrderComplete";
 
 const routes = [
@@ -171,6 +172,10 @@ const routes = [
                 path: "messages",
                 element: Messages
             },
+            {
+                path: "users",
+                element: Users
+            }
         ]
     },
     {

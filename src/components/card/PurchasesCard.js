@@ -16,7 +16,7 @@ const PurchasesCard = ({order}) => {
             <div className="flex justify-between flex-wrap gap-8">
                 <div className="text-center space-y-2">
                     <h3 className="font-semibold text-md">Order Number</h3>
-                    <p>{transactionId}</p>
+                    <p>#{transactionId.toUpperCase()}</p>
                 </div>
                 <div className="text-center space-y-2">
                     <h3 className="font-semibold text-md">Purchased</h3>

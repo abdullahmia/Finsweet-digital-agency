@@ -2,8 +2,8 @@ import moment from "moment";
 import { useEffect } from "react";
 import toast from 'react-hot-toast';
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useDeleteArticleMutation } from "../../features/article/articleApi";
-
 
 const ArticleRow = ({ key, article = {}, currentPage }) => {
     const {_id, title, categories, author, createdAt, slug} = article;
@@ -20,7 +20,25 @@ const ArticleRow = ({ key, article = {}, currentPage }) => {
     }, [isSuccess, isError])
 
     const handleDelete = () => {
-        deleteArticle({ slug, currentPage });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteArticle({ slug, currentPage });
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+            }
+        })
+        
     }
 
     

@@ -93,9 +93,12 @@ export const authApi = apiSlice.injectEndpoints({
                     // do nothing
                 }
             }
-        })
+        }),
+        getAllUsers: builder.query({
+            query: (page) => `/auth/users?page=${page}`
+        })  
     })
 })
 
 
-export const { useRegisterUserMutation, useLoginUserMutation, useUserForgotPasswordMutation, useResetPasswordMutation, useChangePasswordMutation, useGetUserQuery, useUpdateUserMutation } = authApi;
+export const { useRegisterUserMutation, useLoginUserMutation, useUserForgotPasswordMutation, useResetPasswordMutation, useChangePasswordMutation, useGetUserQuery, useUpdateUserMutation, useGetAllUsersQuery } = authApi;

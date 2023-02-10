@@ -5,6 +5,7 @@ import { useGetUserOrdersQuery } from "../../features/order/orderApi";
 
 const MyPurchases = () => {
     const { data: orderHistory, isLoading } = useGetUserOrdersQuery();
+    console.log(orderHistory);
     return (
         <DashboardLayout title="My Purchases">
             <div className="w-full font-poppins px-6">

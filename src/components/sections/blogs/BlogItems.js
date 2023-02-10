@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useGetArticlesQuery } from "../../../features/article/articleApi";
 import BlogsLoader from "../../loaders/BlogsLoader";
+import Pagination from "../../pagination/Pagination";
 import Blog from "./Blog";
 
 const BlogItems = ({ items}) => {
   // pagination state
   const [page, setPage] = useState(1);
-  const { data: articles, isLoading } = useGetArticlesQuery();
+  const { data: articles, isLoading } = useGetArticlesQuery(page);
   const totalPages = articles?.totalPages;
 
 
@@ -29,25 +30,9 @@ const BlogItems = ({ items}) => {
             ))
           } 
         </div>
-      {
-        totalPages > 1 && <div className='flex justify-center item-center pt-10'>
-          <nav aria-label="Page navigation example">
-            <ul class="inline-flex items-center -space-x-px">
 
-              {/* pagination button with total page */}
-              {
-                Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                  <li>
-                    <button onClick={() => handlePageChange(number)} class={`block px-3 py-2 ml-0 leading-tight text-gray-500  border hover:text-gray-700 ${page === number ? 'bg-blue-600 border-blue-400 text-white' : 'bg-white border-gray-300'}`}>
-                      {number}
-                    </button>
-                  </li>
-                ))
-              }
-            </ul>
-          </nav>
-        </div>
-      }
+        <Pagination totalPages={totalPages} handlePageChange={handlePageChange} page={page} />
+
     </section>
   )
 }

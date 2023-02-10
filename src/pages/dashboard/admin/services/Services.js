@@ -18,7 +18,7 @@ const Services = () => {
           </div>
 
         {
-        isLoading ? <ServiceLoader col={2} /> : services.length === 0 ? <div className=''>
+        isLoading ? <ServiceLoader col={2} /> : services && services.length === 0 ? <div className=''>
             <div className='flex items-center justify-center mt-5'>
               <h2 className='text-2xl font-poppins text-gray-500'>No Services Found</h2>
             </div>

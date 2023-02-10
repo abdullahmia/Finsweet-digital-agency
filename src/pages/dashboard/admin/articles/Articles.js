@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import DashboardLayout from '../../../../components/layouts/DashboardLayout';
 import TableLoader from '../../../../components/loaders/TableLoader';
+import Pagination from '../../../../components/pagination/Pagination';
 import ArticleRow from '../../../../components/tableKits/ArticleRow';
 import { useGetArticlesQuery } from '../../../../features/article/articleApi';
 
@@ -104,29 +105,7 @@ const Articles = () => {
            
 
             {/* Pagination */}
-
-            {
-                totalPages > 1 && <div className='flex justify-center item-center pt-10'>
-                    <nav aria-label="Page navigation example">
-                        <ul class="inline-flex items-center -space-x-px">
-
-                            {/* pagination button with total page */}
-                            {
-                                Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                                    <li>
-                                        <button onClick={() => handlePageChange(number)} class={`block px-3 py-2 ml-0 leading-tight text-gray-500  border hover:text-gray-700 ${page === number ? 'bg-blue-600 border-blue-400 text-white' : 'bg-white border-gray-300'}`}>
-                                            {number}
-                                        </button>
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                    </nav>
-                </div>
-            }
-
-            
-
+            <Pagination totalPages={totalPages} handlePageChange={handlePageChange} page={page} />
         </DashboardLayout>
     )
 }

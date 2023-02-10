@@ -41,12 +41,12 @@ export const orderApi = apiSlice.injectEndpoints({
             }
         }),
         getAllOrders: builder.query({
-            query: () => `/order/`,
+            query: (page) => `/order/?page=${page}`,
             async onCacheEntryAdded(arg, { cacheDataLoaded, cacheEntryRemoved, updateCachedData }) {
                 // create a new order
                 socket.on('newOrder', (order) => {
                     updateCachedData((draft) => {
-                        draft.unshift(order);
+                        draft.orders.unshift(order);
                     });
                 });
             }
@@ -62,8 +62,8 @@ export const orderApi = apiSlice.injectEndpoints({
                     draft.order.status = arg.body.status;
                 }))
 
-                let updateOrders = dispatch(apiSlice.util.updateQueryData('getAllOrders', undefined, (draft) => {
-                    let order = draft.find(order => order._id === arg.id);
+                let updateOrders = dispatch(apiSlice.util.updateQueryData('getAllOrders', 1, (draft) => {
+                    let order = draft.orders.find(order => order._id === arg.id);
                     order.status = arg.body.status;
                 }))
 
