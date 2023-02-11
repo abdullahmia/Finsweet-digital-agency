@@ -42,22 +42,22 @@ const Footer = () => {
                     <div className="ml-auto lg:block hidden">
                         <ul className="flex items-center gap-7 text-gray-900">
                             <li>
-                                <Link href="/" className="text-[16px] font-[500]">Home</Link>
+                                <Link to="/" className="text-[16px] font-[500]">Home</Link>
                             </li>
                             <li>
-                                <Link href="/about" className="text-[16px] font-[500]">About us</Link>
+                                <Link to="/about" className="text-[16px] font-[500]">About us</Link>
                             </li>
                             <li>
-                                <Link href="/features" className="text-[16px] font-[500]">Features</Link>
+                                <Link to="/features" className="text-[16px] font-[500]">Features</Link>
                             </li>
                             <li>
-                                <Link href="/pricing" className="text-[16px] font-[500]">Pricing</Link>
+                                <Link to="/pricing" className="text-[16px] font-[500]">Pricing</Link>
                             </li>
                             <li>
-                                <Link href="/faq" className="text-[16px] font-[500]">FAQ</Link>
+                                <Link to="/faq" className="text-[16px] font-[500]">FAQ</Link>
                             </li>
                             <li>
-                                <Link href="/blog" className="text-[16px] font-[500]">Blog</Link>
+                                <Link to="/blog" className="text-[16px] font-[500]">Blog</Link>
                             </li>
                         </ul>
                     </div>

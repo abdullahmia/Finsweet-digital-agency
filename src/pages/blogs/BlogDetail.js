@@ -2,8 +2,10 @@ import moment from 'moment';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Image from '../../components/custom/Image';
+import CommentForm from '../../components/forms/CommentForm';
 import Layout from "../../components/layouts/Layout";
 import ArticleDetailLoader from '../../components/loaders/ArticleDetailLoader';
+import Comments from '../../components/sections/blogs/comment/Comments';
 import { useGetArticleQuery } from '../../features/article/articleApi';
 
 const BlogDetail = () => {
@@ -19,7 +21,7 @@ const BlogDetail = () => {
     }, [isError])
 
   return (
-      <Layout title={isLoading ? 'Loading...' : article?.title && article}>
+      <Layout title={isLoading ? 'Loading...' : article?.title && article?.title}>
         
           <section className="py-24 lg:px-0 px-4">
               <div className="container">
@@ -55,6 +57,12 @@ const BlogDetail = () => {
                               </div>
 
                           </div>
+
+                          {/* Comments */}
+                          <Comments />
+
+                          {/* Comment Form */}
+                          <CommentForm />
                     </>
                   }
 
