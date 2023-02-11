@@ -95,6 +95,12 @@ const Sidebar = () => {
                                 >
                                     <span className='ml-7'>Categories</span>
                                 </NavLink>
+                                <NavLink
+                                    to="/admin/article/comments"
+                                    className={(navInfo) => navInfo.isActive ? "flex items-center gap-2 font-semibold text-indigo-500" : "flex items-center gap-2"}
+                                >
+                                    <span className='ml-7'>Comments</span>
+                                </NavLink>
                             </div>
 
                             {/* <div className="space-y-1 pl-8 pt-4">

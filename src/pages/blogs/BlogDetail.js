@@ -11,7 +11,7 @@ import { useGetArticleQuery } from '../../features/article/articleApi';
 const BlogDetail = () => {
     const {slug} = useParams();
 
-    const {data: article, isLoading, isError} = useGetArticleQuery(slug);
+    const {data, isLoading, isError} = useGetArticleQuery(slug);
 
     useEffect(() => {
         // if there is an error, redirect to 404 page
@@ -19,6 +19,8 @@ const BlogDetail = () => {
             window.location.href = '/404';
         }
     }, [isError])
+
+    const { article, comments } = data || {};
 
   return (
       <Layout title={isLoading ? 'Loading...' : article?.title && article?.title}>
@@ -59,10 +61,10 @@ const BlogDetail = () => {
                           </div>
 
                           {/* Comments */}
-                          <Comments />
+                          <Comments comments={comments} />
 
                           {/* Comment Form */}
-                          <CommentForm />
+                          <CommentForm article={article?._id} slug={article?.slug} />
                     </>
                   }
 

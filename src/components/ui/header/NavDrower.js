@@ -27,9 +27,9 @@ const NavDrower = ({ isDrowerOpen, setIsDrowerOpen }) => {
                             <li>
                                 <NavLink to="/pricing" className={(navInfo) => navInfo.isActive ? "text-[18px] font-[500] font-poppins text-indigo-600" : "text-[18px] font-[500] font-poppins text-gray-700 hover:text-gray-800 transition"}>Pricing</NavLink>
                             </li>
-                            <li>
+                            {/* <li>
                                 <NavLink to="/project" className={(navInfo) => navInfo.isActive ? "text-[18px] font-[500] font-poppins text-indigo-600" : "text-[18px] font-[500] font-poppins text-gray-700 hover:text-gray-800 transition"}>Projects</NavLink>
-                            </li>
+                            </li> */}
                             <li>
                                 <NavLink to="/blog" className={(navInfo) => navInfo.isActive ? "text-[18px] font-[500] font-poppins text-indigo-600" : "text-[18px] font-[500] font-poppins text-gray-700 hover:text-gray-800 transition"}>Blogs</NavLink>
                             </li>

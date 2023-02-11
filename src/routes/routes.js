@@ -23,6 +23,7 @@ import PurchaseDetail from "../pages/dashboard/PurchaseDetail";
 import AddArticle from "../pages/dashboard/admin/articles/AddArticle";
 import ArticleCategories from "../pages/dashboard/admin/articles/ArticleCategories";
 import AdminArticles from "../pages/dashboard/admin/articles/Articles";
+import Comments from "../pages/dashboard/admin/articles/Comments";
 import EditArticle from "../pages/dashboard/admin/articles/EditArticle";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import Messages from "../pages/dashboard/admin/messages/Messages";
@@ -139,6 +140,10 @@ const routes = [
             {
                 path: 'article/category',
                 element: ArticleCategories
+            },
+            {
+                path: 'article/comments',
+                element: Comments
             },
             // {
             //     path: 'projects',

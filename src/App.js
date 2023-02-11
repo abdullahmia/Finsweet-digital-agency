@@ -1,4 +1,5 @@
 import { Toaster } from 'react-hot-toast';
+import PreLoader from './components/loaders/PreLoader';
 import useAuthCheck from './hooks/useAuthCheck';
 import Main from "./pages/Main";
 const App = () => {
@@ -7,7 +8,7 @@ const App = () => {
   return authCheck ? <>
     <Main />
     <Toaster position="top-right" />
-  </> : <>Loading...</>
+  </> : <PreLoader />
 }
 
 export default App;
