@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import { useDeleteArticleMutation } from "../../features/article/articleApi";
 
 const ArticleRow = ({ key, article = {}, currentPage }) => {
-    const {_id, title, categories, author, createdAt, slug} = article;
+    const {title, categories, author, createdAt, slug} = article;
 
     // delete article handler
     const [deleteArticle, {isLoading, isError, isSuccess}] = useDeleteArticleMutation();

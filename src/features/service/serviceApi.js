@@ -39,7 +39,7 @@ export const serviceApi = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 let patch = dispatch(apiSlice.util.updateQueryData('getServices', undefined, (draft) => {
-                    let filteredServices = draft.filter(service => service._id != arg);
+                    let filteredServices = draft.filter(service => service._id !== arg);
                     return filteredServices;
                 }))
 
@@ -61,10 +61,10 @@ export const serviceApi = apiSlice.injectEndpoints({
             }),
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
-                    const result = await queryFulfilled;
+                    await queryFulfilled;
 
                     dispatch(apiSlice.util.updateQueryData('getServices', undefined, (draft) => {
-                        let service = draft.find(service => service._id == arg.id);
+                        let service = draft.find(service => service._id === arg.id);
                         service.name = arg.body.name;
                         service.price = arg.body.price;
                         service.description = arg.body.description;

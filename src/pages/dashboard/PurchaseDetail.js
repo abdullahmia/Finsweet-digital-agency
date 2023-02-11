@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import DashboardLayout from '../../components/layouts/DashboardLayout';
+import PageLoader from '../../components/loaders/PageLoader';
 import EditOrder from '../../components/orders/EditOrder';
 import { useGetSingleOrderQuery } from '../../features/order/orderApi';
 
@@ -30,13 +31,12 @@ const PurchaseDetail = () => {
 
     return (
         <DashboardLayout title={transactionId ? transactionId.toUpperCase() : 'Loading...'}>
+            
             {
                 isError && error && <div className="bg-red-200 p-5 rounded text-red-500 text-sm font-semibold">{error}</div>
             }
             {
-                isLoading ? (<div>
-                    loading
-                </div>) : (
+                isLoading ? (<PageLoader />) : (
                     order && <>
                         {currentUser.role === 'admin' && <EditOrder order={order} />}
                         <div className="w-full font-poppins px-6">

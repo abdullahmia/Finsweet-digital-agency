@@ -13,5 +13,6 @@ export const apiSlice = createApi({
             return header;
         }
     }),
+    keepUnusedDataFor: 600,
     endpoints: (builder) => ({})
 })

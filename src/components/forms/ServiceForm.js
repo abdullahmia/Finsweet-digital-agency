@@ -1,10 +1,14 @@
 import { BiCaretRight, BiPlus, BiX } from "react-icons/bi";
 import Circle from '../loaders/Circle';
+import PageLoader from "../loaders/PageLoader";
 
 const ServiceForm = ({ isEdit, serviceProps = {} }) => {
   const { name, price, description, isFeatured, features, feature } = serviceProps.inputs || {};
   const { setName, setPrice, setDescription, setIsFeatured, setFeatures, setFeature } = serviceProps.inputsHanlders || {};
-  const { isLoading, submitHandler } = serviceProps || {};
+  const { isLoading, submitHandler, serviceLoading } = serviceProps || {};
+
+  if (serviceLoading) return <PageLoader />
+
   return (
     <div>
       <div className='shadow px-6 pb-10 pt-4 bg-white font-poppins'>

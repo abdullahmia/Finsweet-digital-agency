@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import Circle from '../../components/loaders/Circle';
 import Editor from '../custom/Editor';
 import Image from '../custom/Image';
+import PageLoader from '../loaders/PageLoader';
 
 const ArticleForm = ({ articleData, isEdit }) => {
     const { inputs, inputsHandler, addArticleHandler, loadings, editAticleHandler } = articleData || {};
@@ -11,7 +12,7 @@ const ArticleForm = ({ articleData, isEdit }) => {
     const { setTitle, addCategoryHandler, setTags, setDescription, setShortDescirption, setTag, addPhotoToPost, resetImage, filePickerRef } = inputsHandler || {};
     const {isBinary} = articleData?.methods || {};
 
-    if (loadings.isLoading) return <Circle />;
+    if (loadings.isLoading) return <PageLoader />;
 
     return (
         <div className='shadow px-6 pb-10 pt-4 bg-white font-poppins'>

@@ -11,7 +11,7 @@ export const orderApi = apiSlice.injectEndpoints({
                     // update the order status
                     if (order) {
                         updateCachedData((draft) => {
-                            let orderData = draft.find(order => order._id === order._id);
+                            let orderData = draft.find(o => o._id === order._id);
                             orderData.status = order.status;
                         });
                     }

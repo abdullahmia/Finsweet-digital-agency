@@ -54,7 +54,7 @@ export const articleApi = apiSlice.injectEndpoints({
                     const result = await queryFulfilled;
                     const { article } = result.data;
                     dispatch(apiSlice.util.updateQueryData('getArticles', arg.currentPage, (draft) => {
-                        let articles = draft.articles?.filter((article => article.slug != arg.slug));
+                        let articles = draft.articles?.filter((article => article.slug !== arg.slug));
                         return { ...draft, articles: articles };
                     }))
 

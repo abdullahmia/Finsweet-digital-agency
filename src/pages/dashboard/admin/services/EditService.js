@@ -17,7 +17,7 @@ const EditService = () => {
     const [feature, setFeature] = useState('');
 
     // get the service
-    const { data: service } = useGetServiceQuery(id);
+    const { data: service, isLoading: serviceLoading } = useGetServiceQuery(id);
     useEffect(() => {
         if (service) {
             setName(service.name);
@@ -56,6 +56,7 @@ const EditService = () => {
         inputs: { name, price, description, isFeatured, features, feature },
         inputsHanlders: { setName, setPrice, setDescription, setIsFeatured, setFeatures, setFeature },
         isLoading,
+        serviceLoading,
         submitHandler: editServiceHandler
     }
 

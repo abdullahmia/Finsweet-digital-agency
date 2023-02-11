@@ -87,7 +87,7 @@ const AddArticle = () => {
 
 
   const addArticleData = {
-    inputs: {title, shortDescription, description, tag, image, categories, tags, allCategories, categories},
+    inputs: {title, shortDescription, description, tag, image, categories, tags, allCategories},
     inputsHandler: { setTitle, setShortDescirption, setDescription, setTag, addPhotoToPost, addCategoryHandler, setTags, resetImage, filePickerRef },
     addArticleHandler,
     loadings: { categoryFetching, createArticleLoading },

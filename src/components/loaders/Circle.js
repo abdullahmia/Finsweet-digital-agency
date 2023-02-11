@@ -1,8 +1,8 @@
 import { BiLoaderAlt } from 'react-icons/bi';
 
-const Circle = () => {
+const Circle = ({size}) => {
   return (
-      <BiLoaderAlt size={20} className="animate-spin" />
+      <BiLoaderAlt size={size ? size : 20} className="animate-spin" />
   )
 }
 
