@@ -4,10 +4,10 @@ import BlogsLoader from "../../loaders/BlogsLoader";
 import Pagination from "../../pagination/Pagination";
 import Blog from "./Blog";
 
-const BlogItems = ({ items}) => {
+const BlogItems = ({ items }) => {
   // pagination state
   const [page, setPage] = useState(1);
-  const { data: articles, isLoading } = useGetArticlesQuery(page);
+  const { data: articles, isLoading } = useGetArticlesQuery({ page, limit: items} );
   const totalPages = articles?.totalPages;
 
 

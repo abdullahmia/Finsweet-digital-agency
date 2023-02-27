@@ -5,8 +5,8 @@ export const articleApi = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
         // get all articles with pagination
         getArticles: builder.query({
-            query: (page) => ({
-                url: `/article?page=${page}`,
+            query: ({ page, limit }) => ({
+                url: `/article?page=${page}&limit=${limit}`,
                 method: 'GET'
             }),
         }),
@@ -23,9 +23,6 @@ export const articleApi = apiSlice.injectEndpoints({
                     dispatch(apiSlice.util.updateQueryData('getArticles', 1, (draft) => {
                         draft.articles.unshift(article);
                     }))
-
-                    // update categories total articles cache data if article has categories
-
                     
                     // get the article categories from the arg
                     if (arg.categories.length > 0) {
